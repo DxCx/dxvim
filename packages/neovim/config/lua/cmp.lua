@@ -35,7 +35,16 @@ cmp.setup {
 		end, { "i", "s" }),
 	},
 	sources = {
-		{ name = "nvim_lsp" },
+		{ name = "nvim_lsp_signature_help" },
+		{ name = 'nvim_lsp_document_symbol' },
 		{ name = "luasnip" },
+		{ name = "buffer" },
 	},
 }
+
+-- Use buffer source for `/` (if you enabled `native_menu`, this won't work anymore).
+cmp.setup.cmdline('/', {
+	sources = {
+		{ name = 'buffer' }
+	}
+})

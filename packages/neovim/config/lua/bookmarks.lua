@@ -1,6 +1,8 @@
 local telescope = require("telescope")
 local which_key = require("which-key")
 
+vim.g.bookmark_no_default_key_mappings = 1
+
 telescope.load_extension("vim_bookmarks")
 
 which_key.register({

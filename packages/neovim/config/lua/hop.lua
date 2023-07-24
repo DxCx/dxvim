@@ -3,7 +3,6 @@ local which_key = require("which-key")
 require("hop").setup()
 
 which_key.register({
-	["<leader>"] = {
 		name = "Hop",
 		a = {
 			"<cmd>HopAnywhere<cr>",
@@ -45,9 +44,7 @@ which_key.register({
 			"<cmd>HopWord<cr>",
 			"Hop To Word"
 		}
-	},
 }, {
 	mode = "n",
-	prefix = "<leader>",
 	silent = true,
 })

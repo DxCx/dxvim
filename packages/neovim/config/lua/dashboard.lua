@@ -2,28 +2,15 @@ local home = os.getenv("HOME")
 local dashboard = require("dashboard")
 local dbsession = require("dbsession")
 
-local fortune_handle = io.popen("fortune -s");
-local fortune_output = nil
-
-if fortune_handle ~= nil then
-	fortune_output = fortune_handle:read("*a")
-	fortune_handle:close()
-else
-	fortune_output = "fortune_handle was nil"
-end
-
 local footer = {
 	"",
 	""
 }
 
-if fortune_output ~= nil then
-	for line in string.gmatch(fortune_output, "(.-)\n") do
-		table.insert(footer, line)
-	end
-else
-	table.insert(footer, "Go even further beyond ✨")
-end
+local header = {
+	"",
+	""
+}
 
 dashboard.setup {
 	theme = "hyper",
@@ -35,14 +22,7 @@ dashboard.setup {
 		winbar = true,
 	},
 	config = {
-		header = {
-			"",
-			"",
-			"┏━┓╻  ╻ ╻┏━┓╻ ╻╻  ╺┳╸┏━┓┏━┓",
-			"┣━┛┃  ┃ ┃┗━┓┃ ┃┃   ┃ ┣┳┛┣━┫",
-			"╹  ┗━╸┗━┛┗━┛┗━┛┗━╸ ╹ ╹┗╸╹ ╹",
-			"",
-		},
+		header = header,
 		footer = footer,
 		week_header = {
 			enable = false,

@@ -1,0 +1,31 @@
+{...}:
+[
+  ./bufferline.lua
+  ./scope.lua
+  ./cmp.lua
+  ./dashboard.lua
+  ./fzf.lua
+  ./git.lua
+  ./gitsigns.lua
+  ./hop.lua
+  ./icon-picker.lua
+  ./keys.lua
+  ./lspconfig.lua
+  ./lualine.lua
+  ./neoscroll.lua
+  ./hex.lua
+  ./nord.lua
+  ./telescope.lua
+  ./tmux-navigator.lua
+  ./todo-comments.lua
+  ./toggleterm.lua
+  ./tree-sitter.lua
+  ./tree.lua
+  ./trouble.lua
+  ./twilight.lua
+  ./bookmarks.lua
+  ./indent.lua
+  ./context.lua
+  ./which-key.lua
+  ./wrap-toggle.lua
+]

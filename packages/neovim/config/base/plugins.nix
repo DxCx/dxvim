@@ -49,6 +49,16 @@ let
       sha256 = "12yrmnphspb3nyrsgvmp5m270k5hkw1gna904ypl90smskc4wiyx";
     };
   };
+  hex-nvim = vimUtils.buildVimPluginFrom2Nix {
+    pname = "hex-nvim";
+    version = "unstable-2023-07-23";
+    src = fetchFromGitHub {
+      owner = "RaafatTurki";
+      repo = "hex.nvim";
+      rev = "d47b87d49b870e2170e992fa6301fc08c9590388";
+      sha256 = "A3f9lP6XmPV/k6Y7K5XziI1dcw37fN3R03+UvqnkMT4=";
+    };
+  };
   # Telescope integration to Nix docs
   telescope-manix = vimUtils.buildVimPluginFrom2Nix {
     pname = "telescope-manix";
@@ -81,12 +91,15 @@ with vimPlugins; [
     (plugins: tree-sitter.allGrammars))
   tree-sitter-playground
   nvim-treesitter-context
+  nvim-treesitter-refactor
+  twilight-nvim
 
   # Utility
   plenary-nvim
   vim-bufkill
   neodev-nvim
   dressing-nvim
+  hex-nvim
 
   # Telescope
   telescope-nvim
@@ -105,13 +118,16 @@ with vimPlugins; [
   # Autocomplete
   nvim-cmp
   cmp-nvim-lsp
+  cmp-nvim-lsp-signature-help # TODO: Supposly instead of 'ray-x/lsp_signature.nvim'
+  cmp-nvim-lsp-document-symbol
+  # TODO: Add cmp-nvim-path and cmp-nvim-cmdline
 
   # Snippets
   luasnip
   cmp_luasnip
 
   # Direnv
-  direnv-vim
+  direnv-vim # TODO - Looks like this replaces vim-prj + vim-scripts/DfrankUtil
 
   # Text Manipulation
   vim-repeat
@@ -132,10 +148,9 @@ with vimPlugins; [
   vim-illuminate
   todo-comments-nvim
   delimitMate
-  twilight-nvim
 
   # Theme
-  NeoSolarized # TODO: Previously used oceanic-next
+  nord-nvim
 
   # Status Line & Buffer Line # TODO: Previously used vim-airline
   lualine-nvim
@@ -167,15 +182,21 @@ with vimPlugins; [
   # Bookmarks
   vim-bookmarks
   telescope-vim-bookmarks-nvim
+  telescope-fzf-native-nvim
 
   # Line Indentation
   indent-blankline-nvim
+
+  # TODO: Undo plugin - https://github.com/debugloop/telescope-undo.nvim
+  # TODO: vim-trimmer ? https://github.com/derekprior/vim-trimmer, lsp formatting should be able to replace this.
+  # TODO: vim maximizer - https://github.com/0x00-ketsu/maximizer.nvim
+  # TODO: Clang-format (rhysd/vim-clang-format) in case mason doesn't cover this up.
 
   ########## End of global plugins
 
   # Nix
   vim-nix
-  telescope-manix
+  telescope-manix # TODO: Add manix as extra-package.
 
   # Markdown
   markdown-preview-nvim

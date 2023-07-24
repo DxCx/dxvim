@@ -14,11 +14,9 @@
     inputs.snowfall-lib.mkFlake {
       inherit inputs;
 
+      package-namespace = "dxvim";
+
       src = ./.;
-
-      channels-config.allowUnfree = true;
-
-      package-namespace = "dxcx";
 
       alias.packages.default = "neovim";
     };
