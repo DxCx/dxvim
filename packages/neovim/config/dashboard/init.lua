@@ -1,6 +1,7 @@
 local home = os.getenv("HOME")
 local dashboard = require("dashboard")
 local dbsession = require("dbsession")
+local which_key = require("which-key")
 
 local footer = {
 	"",
@@ -73,3 +74,11 @@ dbsession.setup {
 	dir = home .. "/.config/dashboard-nvim",
 	auto_save_on_exit = true,
 }
+
+which_key.register({
+	s = {
+		name = "Session",
+		s = { "<cmd>SessionSave<cr>", "Save" },
+		l = { "<cmd>SessionLoad<cr>", "Load" },
+	},
+}, { mode = "n", prefix = "<leader>" })

@@ -1,4 +1,4 @@
-{lib, substituteAll, callPackage, ...}:
+{ lib, substituteAll, callPackage, ... }:
 with lib;
 let
   # Usage:
@@ -63,17 +63,17 @@ let
   # ]
   callPackages = packages:
     lib.lists.concatMap
-    (layoutInput:
-	  if builtins.isAttrs layoutInput then
-	    callPackage layoutInput.file layoutInput.options
-	  else
-	    callPackage layoutInput { }
-	)
-    packages;
+      (layoutInput:
+        if builtins.isAttrs layoutInput then
+          callPackage layoutInput.file layoutInput.options
+        else
+          callPackage layoutInput { }
+      )
+      packages;
 
   # helper to get directory out of both syntaxes ./layout or { dir = ./layout, options = { } }
   evaluateLayoutInputDirectory = layoutInput:
-	if builtins.isAttrs layoutInput then
+    if builtins.isAttrs layoutInput then
       layoutInput.dir
     else
       layoutInput;
@@ -84,13 +84,13 @@ let
 
   # Helper to check if file exists
   inputExists = directory: filename:
-  	builtins.pathExists(concatFilename directory filename);
+    builtins.pathExists (concatFilename directory filename);
 
   # Filters assets that are not relevant because the user didn't define them.
   filterExistingAssets = layouts: filename:
     builtins.filter
-    (layout: inputExists layout filename)
-    layouts;
+      (layout: inputExists layout filename)
+      layouts;
 
   # Fallbacks to empty options if options was provided but not specifically for this part.
   getOptionsKeyOrDefault = optionsAttrsSet: optionsKey:
@@ -109,18 +109,20 @@ let
   # Helper to convert user input into the right format
   buildInputList = layouts: filename: optionsKey:
     let
-    	existingInputs = filterExistingAssets layouts filename;
-    	existingMappedInputs =
-    	  lib.lists.forEach existingInputs
-    	  (layout:
-    	  let
-    	  	file = concatFilename layout filename;
-    	  	options = getOptionOrDefault layout optionsKey;
-    	  in {
-    	    inherit file;
-    	    inherit options;
-    	  });
-    in existingMappedInputs;
+      existingInputs = filterExistingAssets layouts filename;
+      existingMappedInputs =
+        lib.lists.forEach existingInputs
+          (layout:
+            let
+              file = concatFilename layout filename;
+              options = getOptionOrDefault layout optionsKey;
+            in
+            {
+              inherit file;
+              inherit options;
+            });
+    in
+    existingMappedInputs;
 
   # Usage:
   # Layout directory can contain the following files:
@@ -145,30 +147,32 @@ let
   #   { file = ./layout_directory; options = { plugins = { MY_ARG = "hello-world"; }; extra-packages = { MY_ARG2 = "hello-worldz"; } }; }
   # ]
   concatVimConfigurations = (layouts:
-  let
-    vim-plugins = buildInputList layouts "plugins.nix" "plugins";
-    vim-extra-packages = buildInputList layouts "extra-packages.nix" "extra-packages";
-    vim-extra-lua-packages = buildInputList layouts "extra-lua-packages.nix" "extra-lua-packages";
-    vim-extra-python3-packages = buildInputList layouts "extra-python3-packages.nix" "extra-python3-packages";
-    vim-config-files = buildInputList layouts "init.vim" "vim";
-    vim-lua-config-files = buildInputList layouts "init.lua" "lua";
+    let
+      vim-plugins = buildInputList layouts "plugins.nix" "plugins";
+      vim-extra-packages = buildInputList layouts "extra-packages.nix" "extra-packages";
+      vim-extra-lua-packages = buildInputList layouts "extra-lua-packages.nix" "extra-lua-packages";
+      vim-extra-python3-packages = buildInputList layouts "extra-python3-packages.nix" "extra-python3-packages";
+      vim-config-files = buildInputList layouts "init.vim" "vim";
+      vim-lua-config-files = buildInputList layouts "init.lua" "lua";
 
-	all-plugins = callPackages vim-plugins;
-	extra-packages = callPackages vim-extra-packages;
-	extra-lua-packages = callPackages vim-extra-lua-packages;
-	extra-python3-packages = python-packages: callPackages vim-extra-python3-packages;
+      all-plugins = callPackages vim-plugins;
+      extra-packages = callPackages vim-extra-packages;
+      extra-lua-packages = callPackages vim-extra-lua-packages;
+      extra-python3-packages = python-packages: callPackages vim-extra-python3-packages;
 
-	vim-config = mkVimConfigs vim-config-files;
-	lua-config = mkLuaConfigs vim-lua-config-files;
-  in {
-	  inherit all-plugins;
-	  inherit extra-packages;
-	  inherit extra-lua-packages;
-	  inherit extra-python3-packages;
+      vim-config = mkVimConfigs vim-config-files;
+      lua-config = mkLuaConfigs vim-lua-config-files;
+    in
+    {
+      inherit all-plugins;
+      inherit extra-packages;
+      inherit extra-lua-packages;
+      inherit extra-python3-packages;
 
-	  inherit vim-config;
-	  inherit lua-config;
-  });
-in {
-	inherit concatVimConfigurations;
+      inherit vim-config;
+      inherit lua-config;
+    });
+in
+{
+  inherit concatVimConfigurations;
 }

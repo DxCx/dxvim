@@ -6,10 +6,12 @@ wrapped-neovim.mkWrappedNeovim {
   # Define which layouts to import
   layouts = [
     {
-		# Expanded just to make sure this always works.
-		dir = ./config/base;
-		options = { };
+      # Expanded just to make sure this always works.
+      dir = ./config/base;
+      options = { };
     }
+    ./config/which-key
+    ./config/dashboard
   ];
 
   # Define description for the Nix Package
