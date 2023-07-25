@@ -16,6 +16,10 @@ wrapped-neovim.mkWrappedNeovim {
     ./config/theme
     ./config/dashboard
     ./config/hexmode
+
+    # Lsp must come before any other lsp layout
+    ./config/lsp
+    ./config/lsp/nix
   ];
 
   # Define description for the Nix Package
