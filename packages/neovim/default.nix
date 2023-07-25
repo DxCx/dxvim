@@ -15,6 +15,7 @@ wrapped-neovim.mkWrappedNeovim {
     ./config/filetree
     ./config/theme
     ./config/dashboard
+    ./config/hexmode
   ];
 
   # Define description for the Nix Package
