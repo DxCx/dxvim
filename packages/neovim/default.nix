@@ -28,6 +28,7 @@ wrapped-neovim.mkWrappedNeovim {
     ./config/navic
 
     # After navic as it integrates to it.
+    ./config/statusline
   ];
 
   # Define description for the Nix Package
