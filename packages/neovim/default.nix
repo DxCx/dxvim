@@ -20,6 +20,7 @@ wrapped-neovim.mkWrappedNeovim {
     # Lsp must come before any other lsp layout
     ./config/lsp
     ./config/lsp/nix
+    ./config/lsp/lua
   ];
 
   # Define description for the Nix Package
