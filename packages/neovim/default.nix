@@ -11,6 +11,7 @@ wrapped-neovim.mkWrappedNeovim {
       options = { };
     }
     ./config/which-key
+    ./config/movement
     ./config/theme
     ./config/dashboard
   ];
