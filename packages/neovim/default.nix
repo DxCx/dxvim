@@ -23,6 +23,11 @@ wrapped-neovim.mkWrappedNeovim {
     ./config/lsp
     ./config/lsp/nix
     ./config/lsp/lua
+
+    # Also After LSP as it integrates to it.
+    ./config/navic
+
+    # After navic as it integrates to it.
   ];
 
   # Define description for the Nix Package
