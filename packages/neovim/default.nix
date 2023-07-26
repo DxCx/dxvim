@@ -16,6 +16,7 @@ wrapped-neovim.mkWrappedNeovim {
     ./config/theme
     ./config/dashboard
     ./config/hexmode
+    ./config/git
 
     # Lsp must come before any other lsp layout
     ./config/lsp
