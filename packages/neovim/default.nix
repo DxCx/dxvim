@@ -25,6 +25,7 @@ wrapped-neovim.mkWrappedNeovim {
     ./config/lsp/lua
 
     # Also After LSP as it integrates to it.
+    ./config/copilot
     ./config/navic
 
     # After navic as it integrates to it.
