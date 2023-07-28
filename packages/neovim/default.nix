@@ -12,6 +12,7 @@ wrapped-neovim.mkWrappedNeovim {
     }
     ./config/which-key
     ./config/movement
+    ./config/maximizer
     ./config/filetree
     ./config/theme
     ./config/dashboard
