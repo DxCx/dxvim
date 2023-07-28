@@ -26,6 +26,7 @@ wrapped-neovim.mkWrappedNeovim {
 
     # Also After LSP as it integrates to it.
     ./config/copilot
+    ./config/telescope
     ./config/navic
 
     # After navic as it integrates to it.
