@@ -14,6 +14,7 @@ wrapped-neovim.mkWrappedNeovim {
     ./config/movement
     ./config/maximizer
     ./config/filetree
+    ./config/undotree
     ./config/theme
     ./config/dashboard
     ./config/hexmode
