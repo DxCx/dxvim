@@ -27,6 +27,7 @@ wrapped-neovim.mkWrappedNeovim {
     ./config/lsp/nix
     ./config/lsp/lua
     ./config/lsp/cpp
+    ./config/lsp/cmake
 
     # Also After LSP as it integrates to it.
     ./config/copilot
