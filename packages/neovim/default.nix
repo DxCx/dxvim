@@ -25,6 +25,7 @@ wrapped-neovim.mkWrappedNeovim {
     # Lsp must come before any other lsp layout
     ./config/lsp
     ./config/lsp/common # markdown, yaml, toml
+    ./config/lsp/web # html, css
     ./config/lsp/nix
     ./config/lsp/lua
     ./config/lsp/cpp
