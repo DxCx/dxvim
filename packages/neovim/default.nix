@@ -33,6 +33,7 @@ wrapped-neovim.mkWrappedNeovim {
     ./config/lsp/python
     ./config/lsp/typescript # Also includes javascript
     ./config/lsp/graphql
+    ./config/lsp/docker
 
     # Also After LSP as it integrates to it.
     ./config/copilot
