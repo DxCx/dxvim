@@ -3,10 +3,14 @@
 
   inputs = {
     nixpkgs.url = "github:nixos/nixpkgs/nixos-unstable";
+    utils.url = "github:gytis-ivaskevicius/flake-utils-plus";
 
     snowfall-lib = {
       url = "github:snowfallorg/lib/dev";
-      inputs.nixpkgs.follows = "nixpkgs";
+      inputs = {
+        nixpkgs.follows = "nixpkgs";
+        flake-utils-plus.follows = "utils";
+      };
     };
   };
 
