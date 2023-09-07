@@ -2,7 +2,10 @@
   description = "DxCx Neovim configuration";
 
   inputs = {
-    nixpkgs.url = "github:nixos/nixpkgs/nixos-unstable";
+    neovim-nightly.url = "github:nix-community/neovim-nightly-overlay";
+    #nixpkgs.url = "github:nixos/nixpkgs/nixos-unstable";
+    nixpkgs.follows = "neovim-nightly/nixpkgs";
+
     utils.url = "github:gytis-ivaskevicius/flake-utils-plus";
 
     snowfall-lib = {
@@ -21,6 +24,8 @@
       package-namespace = "dxvim";
 
       src = ./.;
+
+      overlays = [ inputs.neovim-nightly.overlay ];
 
       alias.packages.default = "neovim";
     };
