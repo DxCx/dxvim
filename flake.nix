@@ -2,9 +2,9 @@
   description = "DxCx Neovim configuration";
 
   inputs = {
-    neovim-nightly.url = "github:nix-community/neovim-nightly-overlay";
-    #nixpkgs.url = "github:nixos/nixpkgs/nixos-unstable";
-    nixpkgs.follows = "neovim-nightly/nixpkgs";
+    #neovim-nightly.url = "github:nix-community/neovim-nightly-overlay";
+    #nixpkgs.follows = "neovim-nightly/nixpkgs";
+    nixpkgs.url = "github:nixos/nixpkgs/nixos-unstable";
 
     utils.url = "github:gytis-ivaskevicius/flake-utils-plus";
 
@@ -25,7 +25,7 @@
 
       src = ./.;
 
-      overlays = [ inputs.neovim-nightly.overlay ];
+      # overlays = [ inputs.neovim-nightly.overlay ];
 
       alias.packages.default = "neovim";
     };
