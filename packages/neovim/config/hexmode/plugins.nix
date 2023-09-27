@@ -5,12 +5,12 @@
 let
   hex-nvim = vimUtils.buildVimPluginFrom2Nix {
     pname = "hex-nvim";
-    version = "unstable-2023-08-09";
+    version = "unstable-2023-09-09";
     src = fetchFromGitHub {
       owner = "RaafatTurki";
       repo = "hex.nvim";
-      rev = "63411ffe59fb8ecc3611367731cf13effc4d706f";
-      sha256 = "0nffd7yqp1f3yq10k8xdk0w4k7lx6yvxaih99aql4a5s417zlqsd";
+      rev = "dc51e5d67fc994380b7c7a518b6b625cde4b3062";
+      sha256 = "13j27zc18chlgv9w7ml7j3lxbl7lkcqvvwys05hw0dbhik13bcyh";
     };
   };
 in

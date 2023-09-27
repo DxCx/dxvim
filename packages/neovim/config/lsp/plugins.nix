@@ -9,22 +9,22 @@ let
 
   tree-sitter-playground = vimUtils.buildVimPluginFrom2Nix {
     pname = "tree-sitter-playground";
-    version = "unstable-2023-08-26";
+    version = "unstable-2023-09-15";
     src = fetchFromGitHub {
       owner = "nvim-treesitter";
       repo = "playground";
-      rev = "429f3e76cbb1c59fe000b690f7a5bea617b890c0";
-      sha256 = "1flqiycr7dm4cyp2gpy3dmkk8xcdk4268kgmp5qz43qf7fi8m7iy";
+      rev = "ba48c6a62a280eefb7c85725b0915e021a1a0749";
+      sha256 = "1vgj5vc32ly15ni62fk51yd8km2zp3fkzx0622x5cv9pavmjpr40";
     };
   };
   refactoring-nvim = vimUtils.buildVimPluginFrom2Nix {
     pname = "refactoring-nvim";
-    version = "unstable-2023-08-31";
+    version = "unstable-2023-11-08";
     src = fetchFromGitHub {
       owner = "ThePrimeagen";
       repo = "refactoring.nvim";
-      rev = "2ec9bc0fb5f3c8c6a0f776f0159dd2a3b1663554";
-      sha256 = "038cczxj9ba3axb3aw5r2dsp5anzacnwnnp61i1pk7kk8l3wg2ck";
+      rev = "156532476deb10b1b2a32cb38e1078b3f9951c42";
+      sha256 = "03xgyfzb2jsz7788k5h122jskq90irgg0m12csbrb2ysd727pyf8";
     };
   };
 in

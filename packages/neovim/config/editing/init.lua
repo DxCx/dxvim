@@ -1,4 +1,4 @@
-local indent = require("indent_blankline")
+local indent = require("ibl")
 local todo = require("todo-comments")
 local surround = require("nvim-surround")
 local comment = require("nvim_comment")
@@ -29,9 +29,4 @@ vim.g.indent_blankline_filetype_exclude = {
 	"Trouble",
 }
 
-indent.setup {
-	show_end_of_line = true,
-	space_char_blankline = " ",
-	show_current_context = true,
-	show_current_context_start = true,
-}
+indent.setup()
