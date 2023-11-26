@@ -1,9 +1,6 @@
-{ vimUtils
-, fetchFromGitHub
-, ...
-}:
+{ vimUtils, fetchFromGitHub, ... }:
 let
-  hex-nvim = vimUtils.buildVimPluginFrom2Nix {
+  hex-nvim = vimUtils.buildVimPlugin {
     pname = "hex-nvim";
     version = "unstable-2023-09-09";
     src = fetchFromGitHub {
@@ -13,7 +10,4 @@ let
       sha256 = "13j27zc18chlgv9w7ml7j3lxbl7lkcqvvwys05hw0dbhik13bcyh";
     };
   };
-in
-[
-  hex-nvim
-]
+in [ hex-nvim ]

@@ -1,13 +1,8 @@
-{ vimPlugins
-, vimUtils
-, callPackage
-, fetchFromGitHub
-, ...
-}:
+{ vimPlugins, vimUtils, callPackage, fetchFromGitHub, ... }:
 let
   nvim-treesitter = callPackage ./treesitter.nix { };
 
-  tree-sitter-playground = vimUtils.buildVimPluginFrom2Nix {
+  tree-sitter-playground = vimUtils.buildVimPlugin {
     pname = "tree-sitter-playground";
     version = "unstable-2023-09-15";
     src = fetchFromGitHub {
@@ -17,7 +12,7 @@ let
       sha256 = "1vgj5vc32ly15ni62fk51yd8km2zp3fkzx0622x5cv9pavmjpr40";
     };
   };
-  refactoring-nvim = vimUtils.buildVimPluginFrom2Nix {
+  refactoring-nvim = vimUtils.buildVimPlugin {
     pname = "refactoring-nvim";
     version = "unstable-2023-11-08";
     src = fetchFromGitHub {
@@ -27,8 +22,7 @@ let
       sha256 = "03xgyfzb2jsz7788k5h122jskq90irgg0m12csbrb2ysd727pyf8";
     };
   };
-in
-with vimPlugins; [
+in with vimPlugins; [
   # Syntax
   nvim-ts-rainbow2
   nvim-treesitter

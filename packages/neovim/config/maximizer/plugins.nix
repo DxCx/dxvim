@@ -1,9 +1,6 @@
-{ vimUtils
-, fetchFromGitHub
-, ...
-}:
+{ vimUtils, fetchFromGitHub, ... }:
 let
-  maximizer-nvim = vimUtils.buildVimPluginFrom2Nix {
+  maximizer-nvim = vimUtils.buildVimPlugin {
     pname = "maximizer.nvim";
     version = "unstable-2023-11-24";
     src = fetchFromGitHub {
@@ -13,8 +10,4 @@ let
       sha256 = "0x52md39s449jngr5rjy33603dica1mylg75zvwvkf56k6ghjzvn";
     };
   };
-in
-[
-  maximizer-nvim
-]
-
+in [ maximizer-nvim ]

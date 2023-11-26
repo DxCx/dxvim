@@ -1,10 +1,6 @@
-{ vimPlugins
-, vimUtils
-, fetchFromGitHub
-, ...
-}:
+{ vimPlugins, vimUtils, fetchFromGitHub, ... }:
 let
-  dbsession-nvim = vimUtils.buildVimPluginFrom2Nix {
+  dbsession-nvim = vimUtils.buildVimPlugin {
     pname = "dbsession.nvim";
     version = "unstable-2023-06-28";
     src = fetchFromGitHub {
@@ -14,8 +10,7 @@ let
       sha256 = "0brlbwci5v49day1bmzsmz73n64367lgmv01frp3758i1dhz75ah";
     };
   };
-in
-with vimPlugins; [
+in with vimPlugins; [
   # Icons (For Dashboard)
   nvim-web-devicons
 
