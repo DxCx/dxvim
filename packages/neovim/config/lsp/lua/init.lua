@@ -20,6 +20,9 @@ vim.cmd.dxvim.enable_lsp("lua_ls", {
 		cmd = { "lua-language-server" },
 		settings = {
 			Lua = {
+				hint = {
+					"enable",
+				},
 				globals = {
 					"vim",
 				},

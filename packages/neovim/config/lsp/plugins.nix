@@ -41,6 +41,9 @@ in with vimPlugins; [
   # Snippets
   luasnip
 
+  # Inlay hints
+  lsp-inlayhints-nvim
+
   # Auto complete
   nvim-cmp
   cmp-nvim-lsp

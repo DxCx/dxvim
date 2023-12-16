@@ -17,6 +17,7 @@ local luasnip = require("luasnip")
 local lspkind = require("lspkind")
 local trouble = require("trouble")
 local refactoring = require("refactoring")
+local inlayhints = require("lsp-inlayhints")
 
 local which_key = require("which-key")
 
@@ -222,7 +223,15 @@ local g_client_capabilities = {
 		-- TODO: Explore later
 	end,
 	["textDocument/inlayHint"] = function(_, _)
-		-- TODO: Explore later
+		return {
+			keys = {
+				["<leader>"] = {
+					t = {
+						h = { "<cmd>lua require('lsp-inlayhints').toggle()<cr>", "Toggle inlay hints" }
+					}
+				}
+			}
+		}
 	end,
 	["textDocument/codeLens"] = function(client, _)
 		-- TODO: Explore later
@@ -451,6 +460,8 @@ local global_on_attach = function(name, client, bufnr)
 
 	-- Enable completion triggered by <c-x><c-o>
 	vim.api.nvim_buf_set_option(bufnr, 'omnifunc', 'v:lua.vim.lsp.omnifunc')
+
+	inlayhints.on_attach(client, bufnr)
 
 	register_lsp_key_bindings(bufnr, per_buffer_opts.keys)
 end
@@ -839,6 +850,9 @@ trouble.setup {
 	-- },
 	-- use_diagnostic_signs = false -- enabling this will use the signs defined in your lsp client
 }
+
+-- Inlay hints
+inlayhints.setup()
 
 which_key.register({
 	t = {

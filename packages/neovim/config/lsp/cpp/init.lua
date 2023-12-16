@@ -88,8 +88,11 @@ vim.cmd.dxvim.enable_lsp("clangd", {
 		offset_encoding = "utf-8",
 	},
 	lsp_setup = {
-		cmd = { 'clangd', '--background-index', '--header-insertion=iwyu', "--clang-tidy", "--cross-file-rename",
-			"--completion-style=bundled" },
+		cmd = { 'clangd', '--background-index', '--header-insertion=iwyu', "--clang-tidy", "--completion-style=bundled" },
+		on_attach = function(_, _)
+			require("clangd_extensions.inlay_hints").setup_autocmd()
+			require("clangd_extensions.inlay_hints").set_inlay_hints()
+		end,
 		init_options = {
 			clangdFileStatus = true, -- Provides information about activity on clangd’s per-file worker thread
 			usePlaceholders = true,
