@@ -1,13 +1,14 @@
 local which_key = require("which-key")
 local gitsigns = require("gitsigns")
 
-vim.api.nvim_create_augroup("bufcheck", { clear = true })
-
-vim.api.nvim_create_autocmd("FileType", {
-	group = "bufcheck",
-	pattern = { "gitcommit", "gitrebase" },
-	command = "startinsert | 1",
-})
+-- Don't start git in insert mode
+-- vim.api.nvim_create_augroup("bufcheck", { clear = true })
+--
+-- vim.api.nvim_create_autocmd("FileType", {
+-- 	group = "bufcheck",
+-- 	pattern = { "gitcommit", "gitrebase" },
+-- 	command = "startinsert | 1",
+-- })
 
 gitsigns.setup {
 	signs = {
