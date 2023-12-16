@@ -6,6 +6,11 @@ local which_key = require("which-key")
 copilot.setup({
 	suggestion = { enabled = false },
 	panel = { enabled = false },
+	filetypes = {
+		gitcommit = true,
+		markdown  = true,
+		yaml      = true,
+	}
 })
 copilot_cmp.setup()
 
