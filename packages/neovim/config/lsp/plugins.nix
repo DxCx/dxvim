@@ -24,7 +24,7 @@ let
   };
 in with vimPlugins; [
   # Syntax
-  nvim-ts-rainbow2
+  rainbow-delimiters-nvim
   nvim-treesitter
   tree-sitter-playground
   vim-illuminate
