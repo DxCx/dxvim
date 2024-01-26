@@ -4,29 +4,25 @@ local copilot_chat = require("CopilotChat")
 local copilot_cmp_comparators = require("copilot_cmp.comparators")
 local which_key = require("which-key")
 
-local chat_prompts = {
+local chat_config = {
 	-- Code related prompts
-	Explain = "Please explain how the following code works.",
-	Review = "Please review the following code and provide suggestions for improvement.",
-	Tests = "Please explain how the selected code works, then generate unit tests for it.",
-	Refactor = "Please refactor the following code to improve its clarity and readability.",
+	e = { "Explain", "Please explain how the following code works.", "Explain code" },
+	r = { "Review", "Please review the following code and provide suggestions for improvement.", "Review code" },
+	t = { "Tests", "Please explain how the selected code works, then generate unit tests for it.", "Generate tests" },
+	R = { "Refactor", "Please refactor the following code to improve its clarity and readability.", "Refactor code" },
+
 	-- Text related prompts
-	Summarize = "Please summarize the following text.",
-	Spelling = "Please correct any grammar and spelling errors in the following text.",
-	Wording = "Please improve the grammar and wording of the following text.",
-	Concise = "Please rewrite the following text to make it more concise.",
+	s = { "Summarize", "Please summarize the following text.", "Summarize text" },
+	S = { "Spelling", "Please correct any grammar and spelling errors in the following text.", "Correct spelling" },
+	w = { "Wording", "Please improve the grammar and wording of the following text.", "Improve wording" },
+	c = { "Concise", "Please rewrite the following text to make it more concise.", "Make text concise" },
 }
 
-local chat_bindings = {
-	e = { "<cmd>:CopilotChatExplain<cr>", "Explain code" },
-	t = { "<cmd>:CopilotChatTests<cr>", "Generate tests" },
-	r = { "<cmd>:CopilotChatReview<cr>", "Review code" },
-	R = { "<cmd>:CopilotChatRefactor<cr>", "Refactor code" },
-	s = { "<cmd>:CopilotChatSummarize<cr>", "Summarize text" },
-	S = { "<cmd>:CopilotChatSpelling<cr>", "Correct spelling" },
-	w = { "<cmd>:CopilotChatWording<cr>", "Improve wording" },
-	c = { "<cmd>:CopilotChatConcise<cr>", "Make text concise" },
-}
+local chat_prompts = {}
+for _, v in pairs(chat_config) do
+	-- build promp config
+	chat_prompts[v[1]] = v[2]
+end
 
 copilot.setup({
 	suggestion = { enabled = false },
@@ -77,6 +73,12 @@ which_key.register({
 	},
 })
 
+local chat_bindings = {}
+for k, v in pairs(chat_config) do
+	-- append yanking of selected
+	chat_bindings[k] = { "<cmd>:CopilotChat" .. v[1] .. "<cr>", v[3] }
+end
+
 -- Register copilot chat bindings
 which_key.register({
 	c = {
@@ -87,7 +89,6 @@ which_key.register({
 }, { mode = "n", noremap = true, silent = true, prefix = "<leader>" })
 
 yanked_bindings = {}
-
 for k, v in pairs(chat_bindings) do
 	-- append yanking of selected
 	yanked_bindings[k] = { "y" .. v[1], v[2] }
