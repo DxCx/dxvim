@@ -7,21 +7,36 @@ local which_key = require("which-key")
 -- To use in commit, toggle verbose commit using 'git config --global commit.verbose true'
 local chat_config = {
 	normal = {
-		-- Code related prompts
+		-- Git commit related prompts
 		g = { "GitCommit", "Please write a commit message for me, it should be descriptive and explain what was change and which problems it was trying to address", "Git commit" },
+		r = { "GitReview", "Please review this commit and let me know of any bugs, concerns or code you think that can be improvmented for maintainability", "Git review" },
+
+		-- Code related prompts
+		r = { "CodeFullBufferReview", "Please review the following file and provide suggestions for design changes, also, let me know of any bugs or concerns you can think of", "Review code file" },
+
+		-- special case of opening a prompt over the whole file
+		["<cr>"] = { "UserFullBufferFreeText", function()
+			vim.ui.input({ prompt = "Copilot Chat : " }, function(question)
+				vim.cmd.CopilotChat(question)
+			end)
+		end, "Free text" },
 	},
 	visual = {
 		-- Code related prompts
-		e = { "Explain", "Please explain how the following code works.", "Explain code" },
-		r = { "Review", "Please review the following code and provide suggestions for improvements also, please let me know of any bugs you can think of", "Review code" },
-		t = { "Tests", "Please explain how the selected code works, then generate unit tests for it.", "Generate tests" },
-		R = { "Refactor", "Please refactor the following code to improve its clarity and readability.", "Refactor code" },
+		e = { "CodeExplain", "Please explain how the following code works.", "Explain code" },
+		r = { "CodeReview", "Please review the following code and provide suggestions for improvements also, please let me know of any bugs or concerns you can think of", "Review code" },
+		t = { "CodeTests", "Please explain how the selected code works, then generate unit tests for it.", "Generate tests" },
+		R = { "CodeRefactor", "Please refactor the following code to improve its clarity and readability.", "Refactor code" },
+		d = { "CodeDocs", "Generate code comments for the given code, and then provide a description on the function, what does it do? are there any concerns or code smells?", "Document code" },
+		m = { "CodeMissingDocs", "Please write documentation to the functions which doesn't have it, the documentation should be templated as the existing functions, and shoud be descriptive and raise any side effects or concerns", "Missing documentation" },
+		i = { "CodeImplement", "Please review the function documentation and then provide a naive implemention for it", "Implement code" },
+		T = { "CodeTODO", "Please analyze the provided code, and then provide improved version implementing the missing TODOs", "Implement TODO" },
 
 		-- Text related prompts
-		s = { "Summarize", "Please summarize the following text.", "Summarize text" },
-		S = { "Spelling", "Please correct any grammar and spelling errors in the following text.", "Correct spelling" },
-		w = { "Wording", "Please improve the grammar and wording of the following text.", "Improve wording" },
-		c = { "Concise", "Please rewrite the following text to make it more concise.", "Make text concise" },
+		s = { "TextSummarize", "Please summarize the following text.", "Summarize text" },
+		S = { "TextSpelling", "Please correct any grammar and spelling errors in the following text.", "Correct spelling" },
+		w = { "TextWording", "Please improve the grammar and wording of the following text.", "Improve wording" },
+		c = { "TextConcise", "Please rewrite the following text to make it more concise.", "Make text concise" },
 
 		-- special case of opening a prompt
 		["<cr>"] = { "UserFreeText", function()
