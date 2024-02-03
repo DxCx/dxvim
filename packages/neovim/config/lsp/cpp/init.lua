@@ -1,3 +1,5 @@
+local which_key = require("which-key")
+
 require("clangd_extensions").setup({
 	inlay_hints = {
 		inline = vim.fn.has("nvim-0.10") == 1,
@@ -101,6 +103,13 @@ vim.cmd.dxvim.enable_lsp("clangd", {
 		},
 	},
 })
+
+which_key.register({
+	c = {
+		h = { '<cmd>:ClangdSwitchSourceHeader<CR>',
+			  'Clangd Switch Header/Source' },
+	},
+}, { mode = "n", prefix = "<leader>", silent = true })
 
 vim.cmd.dxvim.update_lsp_cmp_setup({
 	sorting = {
