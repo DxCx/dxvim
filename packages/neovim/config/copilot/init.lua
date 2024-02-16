@@ -4,6 +4,13 @@ local copilot_chat = require("CopilotChat")
 local copilot_cmp_comparators = require("copilot_cmp.comparators")
 local which_key = require("which-key")
 
+-- Specially handlen prompts (in plugin github - https://github.com/CopilotC-Nvim/CopilotChat.nvim, rplugin/python3/CopilotChat/prompts.py)
+local special_promps = {
+	explain = "Write a explanation for the code above as paragraphs of text.",
+	tests = "Write a set of detailed unit test functions for the code above.",
+	fix = "There is a problem in this code. Rewrite the code to show it with the bug fixed.",
+}
+
 -- To use in commit, toggle verbose commit using 'git config --global commit.verbose true'
 local chat_config = {
 	normal = {
@@ -13,6 +20,9 @@ local chat_config = {
 
 		-- Code related prompts
 		r = { "CodeFullBufferReview", "Please review the following file and provide suggestions for design changes, also, let me know of any bugs or concerns you can think of", "Review code file" },
+		e = { "CodeFullBufferExplain", special_promps.explain, "Explain code" },
+		t = { "CodeFullBufferTests", special_promps.tests, "Generate tests" },
+		f = { "CodeFullBufferFix", special_promps.fix, "Fix code" },
 
 		-- special case of opening a prompt over the whole file
 		["<cr>"] = { "UserFullBufferFreeText", function()
@@ -23,13 +33,14 @@ local chat_config = {
 	},
 	visual = {
 		-- Code related prompts
-		e = { "CodeExplain", "Please explain how the following code works.", "Explain code" },
+		e = { "CodeExplain", special_promps.explain, "Explain code" },
 		r = { "CodeReview", "Please review the following code and provide suggestions for improvements also, please let me know of any bugs or concerns you can think of", "Review code" },
-		t = { "CodeTests", "Please explain how the selected code works, then generate unit tests for it.", "Generate tests" },
+		t = { "CodeTests", special_promps.tests, "Generate tests" },
+		f = { "CodeFix", special_promps.fix, "Fix code" },
 		R = { "CodeRefactor", "Please refactor the following code to improve its clarity and readability.", "Refactor code" },
 		d = { "CodeDocs", "Generate code comments for the given code, and then provide a description on the function, what does it do? are there any concerns or code smells?", "Document code" },
 		m = { "CodeMissingDocs", "Please write documentation to the functions which doesn't have it, the documentation should be templated as the existing functions, and shoud be descriptive and raise any side effects or concerns", "Missing documentation" },
-		i = { "CodeImplement", "Please review the function documentation and then provide a naive implemention for it", "Implement code" },
+		I = { "CodeImplement", "Please review the function documentation and then provide a naive implemention for it", "Implement code" },
 		T = { "CodeTODO", "Please analyze the provided code, and then provide improved version implementing the missing TODOs", "Implement TODO" },
 
 		-- Text related prompts
@@ -140,6 +151,7 @@ which_key.register({
 	c = {
 		c = vim.cmd.dxvim.table_merge({
 			name = "Copilot Chat",
+			i = { ":CopilotChatInPlace<cr>", "Copilot in place" },
 		}, visual_bindings),
 	},
 }, { mode = "x", noremap = true, silent = true, prefix = "<leader>" })
@@ -158,6 +170,11 @@ which_key.register({
 	c = {
 		c = vim.cmd.dxvim.table_merge({
 			name = "Copilot Chat",
+			d = { "<cmd>:CopilotChatFixDiagnostic<cr>", "Fix diagnostics" },
 		}, normal_bindings),
+	},
+	t = {
+		name = "Toggle",
+		c = { "<cmd>:CopilotChatVsplitToggle<cr>", "Copilot toggle buffer" },
 	},
 }, { mode = "n", noremap = true, silent = true, prefix = "<leader>" })
