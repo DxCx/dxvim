@@ -18,6 +18,7 @@ local lspkind = require("lspkind")
 local trouble = require("trouble")
 local refactoring = require("refactoring")
 local inlayhints = require("lsp-inlayhints")
+local lspecho = require("lspecho")
 
 local which_key = require("which-key")
 
@@ -853,6 +854,9 @@ trouble.setup {
 
 -- Inlay hints
 inlayhints.setup()
+
+-- LSP Progress to screen
+lspecho.setup()
 
 which_key.register({
 	t = {

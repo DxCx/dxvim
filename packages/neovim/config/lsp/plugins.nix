@@ -1,7 +1,17 @@
 { vimPlugins, vimUtils, callPackage, fetchFromGitHub, ... }:
 let
   nvim-treesitter = callPackage ./treesitter.nix { };
-
+  lspecho =
+    vimUtils.buildVimPlugin { # echo lsp background progress to statusline
+      pname = "lspecho-nvim";
+      version = "unstable-2024-02-18";
+      src = fetchFromGitHub {
+        owner = "deathbeam";
+        repo = "lspecho.nvim";
+        rev = "cddcf2a402ebdd5d9b555df663e310559f5da69b";
+        sha256 = "0qhj3hkhfqhz61cjq5by5pw1vln1x58f2wsd8cf5sbhxr9dvfjrd";
+      };
+    };
   tree-sitter-playground = vimUtils.buildVimPlugin {
     pname = "tree-sitter-playground";
     version = "unstable-2023-09-15";
@@ -34,6 +44,7 @@ in with vimPlugins; [
   null-ls-nvim
   lsp-colors-nvim
   trouble-nvim
+  lspecho
 
   # More lsp actions :)
   refactoring-nvim
