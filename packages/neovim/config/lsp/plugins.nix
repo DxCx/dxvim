@@ -4,12 +4,12 @@ let
   lspecho =
     vimUtils.buildVimPlugin { # echo lsp background progress to statusline
       pname = "lspecho-nvim";
-      version = "unstable-2024-02-21";
+      version = "unstable-2024-02-28";
       src = fetchFromGitHub {
         owner = "deathbeam";
         repo = "lspecho.nvim";
-        rev = "c13b1d7a1550275c1f6240eb2005ba8729dbc6e8";
-        sha256 = "15p9yw4vzz3kl9bhaqf6cq0d4cn1c4ahpp6p4y4k4pn1dadbm1a5";
+        rev = "5aab80359269f0c70010f50464a6df0d0c318c08";
+        sha256 = "156n5v2rbbpkvahvgh2f3d4d0130cknbwxa010clvz65q0km1fh7";
       };
     };
   tree-sitter-playground = vimUtils.buildVimPlugin {
@@ -24,12 +24,12 @@ let
   };
   refactoring-nvim = vimUtils.buildVimPlugin {
     pname = "refactoring-nvim";
-    version = "unstable-2024-02-18";
+    version = "unstable-2024-02-27";
     src = fetchFromGitHub {
       owner = "ThePrimeagen";
       repo = "refactoring.nvim";
-      rev = "1b593e7203b31c7bde3fa638e6869144698df3b6";
-      sha256 = "0q0xbn5xxh4fyjm5v2c2pvai9djyk67xk2brqn209sx3qq8drs5n";
+      rev = "94444558fc651b7e36f39d86c518e44b4de15123";
+      sha256 = "005bmgmlpqn876mjgykh072z1n4vl7xk76hxp99hqys7vp65b6gr";
     };
   };
 in with vimPlugins; [
