@@ -2,4 +2,5 @@
 
 with lua51Packages; [
   plenary-nvim
+  jsregexp
 ]
