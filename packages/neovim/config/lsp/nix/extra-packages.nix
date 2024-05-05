@@ -8,7 +8,7 @@ with pkgs; [
   nixd
 
   # Formatters
-  nixfmt
+  nixfmt-rfc-style
 
   # Diagnostics
   deadnix
