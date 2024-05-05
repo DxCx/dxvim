@@ -1,5 +1,4 @@
 { pkgs, ... }:
 
-with pkgs; [
-  direnv
-]
+with pkgs;
+[ direnv ]

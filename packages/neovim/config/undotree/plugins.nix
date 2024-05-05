@@ -1,6 +1,1 @@
-{ vimPlugins
-, ...
-}:
-with vimPlugins; [
-  undotree
-]
+{ vimPlugins, ... }: with vimPlugins; [ undotree ]

@@ -1,5 +1,6 @@
 { python311Packages, ... }:
-with python311Packages; [
+with python311Packages;
+[
   # CopilotChat.nvim dependancies
   tiktoken
   prompt-toolkit

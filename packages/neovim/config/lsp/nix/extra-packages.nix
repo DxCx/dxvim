@@ -1,6 +1,7 @@
 { pkgs, ... }:
 
-with pkgs; [
+with pkgs;
+[
   # Helper to update git deps
   update-nix-fetchgit
 

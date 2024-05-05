@@ -1,6 +1,1 @@
-{ vimPlugins
-, ...
-}:
-with vimPlugins; [
-  nvim-navic
-]
+{ vimPlugins, ... }: with vimPlugins; [ nvim-navic ]

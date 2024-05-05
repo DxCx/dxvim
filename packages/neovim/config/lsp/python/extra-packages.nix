@@ -1,8 +1,11 @@
-{ pkgs
-, nodePackages
-, python311Packages
-, ...
-}: with pkgs; [
+{
+  pkgs,
+  nodePackages,
+  python311Packages,
+  ...
+}:
+with pkgs;
+[
   nodePackages.pyright
 
   mypy

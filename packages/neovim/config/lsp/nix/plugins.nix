@@ -1,13 +1,14 @@
-{ vimPlugins
-, vimUtils
-, fetchFromGitHub
-, ...
+{
+  vimPlugins,
+  vimUtils,
+  fetchFromGitHub,
+  ...
 }:
-with vimPlugins; [
+with vimPlugins;
+[
   # Syntax
   vim-nix
 
   # Telescope-manix
   telescope-manix
 ]
-

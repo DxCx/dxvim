@@ -10,4 +10,5 @@ let
       sha256 = "0x52md39s449jngr5rjy33603dica1mylg75zvwvkf56k6ghjzvn";
     };
   };
-in [ maximizer-nvim ]
+in
+[ maximizer-nvim ]

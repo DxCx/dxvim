@@ -1,6 +1,1 @@
-{ vimPlugins
-, ...
-}:
-with vimPlugins; [
-  direnv-vim
-]
+{ vimPlugins, ... }: with vimPlugins; [ direnv-vim ]

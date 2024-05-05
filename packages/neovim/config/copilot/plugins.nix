@@ -1,4 +1,9 @@
-{ vimPlugins, vimUtils, fetchFromGitHub, ... }:
+{
+  vimPlugins,
+  vimUtils,
+  fetchFromGitHub,
+  ...
+}:
 let
   copilot-chat-nvim = vimUtils.buildVimPlugin {
     pname = "copilot-chat-nvim";
@@ -10,5 +15,10 @@ let
       sha256 = "0ccsy409qhybn5sc3b9ym3241iqa3kywnb23g20234ci8n1jfn20";
     };
   };
-
-in with vimPlugins; [ copilot-chat-nvim copilot-lua copilot-cmp ]
+in
+with vimPlugins;
+[
+  copilot-chat-nvim
+  copilot-lua
+  copilot-cmp
+]

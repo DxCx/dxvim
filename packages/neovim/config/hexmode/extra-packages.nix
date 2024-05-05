@@ -1,5 +1,4 @@
 { pkgs, ... }:
 
-with pkgs; [
-  unixtools.xxd
-]
+with pkgs;
+[ unixtools.xxd ]

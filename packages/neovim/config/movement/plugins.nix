@@ -1,7 +1,4 @@
-{ vimPlugins
-, fetchFromGitHub
-, ...
-}:
+{ vimPlugins, fetchFromGitHub, ... }:
 let
   # Latest version result in bugs =(
   # See https://github.com/phaazon/hop.nvim/issues/345
@@ -16,6 +13,5 @@ let
     };
   });
 in
-with vimPlugins; [
-  hop-nvim-patched
-]
+with vimPlugins;
+[ hop-nvim-patched ]

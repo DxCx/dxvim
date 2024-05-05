@@ -1,8 +1,11 @@
-{ pkgs
-, python311Packages
-, nodePackages
-, ...
-}: with pkgs; [
+{
+  pkgs,
+  python311Packages,
+  nodePackages,
+  ...
+}:
+with pkgs;
+[
   # Markdown
   marksman
   python311Packages.mdformat

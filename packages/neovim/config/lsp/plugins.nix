@@ -1,17 +1,23 @@
-{ vimPlugins, vimUtils, callPackage, fetchFromGitHub, ... }:
+{
+  vimPlugins,
+  vimUtils,
+  callPackage,
+  fetchFromGitHub,
+  ...
+}:
 let
   nvim-treesitter = callPackage ./treesitter.nix { };
-  lspecho =
-    vimUtils.buildVimPlugin { # echo lsp background progress to statusline
-      pname = "lspecho-nvim";
-      version = "unstable-2024-02-28";
-      src = fetchFromGitHub {
-        owner = "deathbeam";
-        repo = "lspecho.nvim";
-        rev = "5aab80359269f0c70010f50464a6df0d0c318c08";
-        sha256 = "156n5v2rbbpkvahvgh2f3d4d0130cknbwxa010clvz65q0km1fh7";
-      };
+  lspecho = vimUtils.buildVimPlugin {
+    # echo lsp background progress to statusline
+    pname = "lspecho-nvim";
+    version = "unstable-2024-02-28";
+    src = fetchFromGitHub {
+      owner = "deathbeam";
+      repo = "lspecho.nvim";
+      rev = "5aab80359269f0c70010f50464a6df0d0c318c08";
+      sha256 = "156n5v2rbbpkvahvgh2f3d4d0130cknbwxa010clvz65q0km1fh7";
     };
+  };
   tree-sitter-playground = vimUtils.buildVimPlugin {
     pname = "tree-sitter-playground";
     version = "unstable-2023-09-15";
@@ -32,7 +38,9 @@ let
       sha256 = "0s0pd2b9hnz4rbgva1xad7lzg8z8mq7j8x15ppnrw6bplx5m35jd";
     };
   };
-in with vimPlugins; [
+in
+with vimPlugins;
+[
   # Syntax
   rainbow-delimiters-nvim
   nvim-treesitter

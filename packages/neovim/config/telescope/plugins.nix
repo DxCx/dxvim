@@ -1,7 +1,6 @@
-{ vimPlugins
-, ...
-}:
-with vimPlugins; [
+{ vimPlugins, ... }:
+with vimPlugins;
+[
   telescope-nvim
   telescope-symbols-nvim
   telescope-project-nvim

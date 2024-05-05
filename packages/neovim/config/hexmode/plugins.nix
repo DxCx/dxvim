@@ -10,4 +10,5 @@ let
       sha256 = "0dvhgdab3f2w7irh164qglj44h4hqba15yq223ckhka7l9r8nggq";
     };
   };
-in [ hex-nvim ]
+in
+[ hex-nvim ]

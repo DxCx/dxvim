@@ -1,6 +1,1 @@
-{ vimPlugins
-, ...
-}:
-with vimPlugins; [
-  SchemaStore-nvim
-]
+{ vimPlugins, ... }: with vimPlugins; [ SchemaStore-nvim ]

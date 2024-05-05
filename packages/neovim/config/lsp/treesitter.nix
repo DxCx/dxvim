@@ -1,7 +1,4 @@
-{ vimPlugins
-, fetchFromGitHub
-, ...
-}:
+{ vimPlugins, fetchFromGitHub, ... }:
 let
   origianl-nvim-treesitter = vimPlugins.nvim-treesitter;
 

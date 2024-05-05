@@ -1,7 +1,4 @@
-{ vimPlugins
-, ...
-}:
+{ vimPlugins, ... }:
 
-with vimPlugins; [
-  which-key-nvim
-]
+with vimPlugins;
+[ which-key-nvim ]

@@ -1,9 +1,7 @@
-{ pkgs
-, nodePackages
-, ...
-}:
+{ pkgs, nodePackages, ... }:
 
-with pkgs; [
+with pkgs;
+[
   # Formatters (typescript)
   nodePackages.prettier
 

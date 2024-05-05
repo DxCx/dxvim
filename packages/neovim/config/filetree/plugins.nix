@@ -1,6 +1,1 @@
-{ vimPlugins
-, ...
-}:
-with vimPlugins; [
-  nvim-tree-lua
-]
+{ vimPlugins, ... }: with vimPlugins; [ nvim-tree-lua ]

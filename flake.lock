@@ -60,12 +60,8 @@
     "snowfall-lib": {
       "inputs": {
         "flake-compat": "flake-compat",
-        "flake-utils-plus": [
-          "utils"
-        ],
-        "nixpkgs": [
-          "nixpkgs"
-        ]
+        "flake-utils-plus": ["utils"],
+        "nixpkgs": ["nixpkgs"]
       },
       "locked": {
         "lastModified": 1713814392,

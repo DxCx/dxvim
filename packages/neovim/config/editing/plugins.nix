@@ -1,7 +1,6 @@
-{ vimPlugins
-, ...
-}:
-with vimPlugins; [
+{ vimPlugins, ... }:
+with vimPlugins;
+[
   indent-blankline-nvim
   vim-bufkill
   vim-repeat

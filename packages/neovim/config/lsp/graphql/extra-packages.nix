@@ -1,8 +1,4 @@
-{ pkgs
-, nodePackages
-, ...
-}:
+{ pkgs, nodePackages, ... }:
 
-with pkgs; [
-  nodePackages.graphql-language-service-cli
-]
+with pkgs;
+[ nodePackages.graphql-language-service-cli ]

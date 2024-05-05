@@ -11,18 +11,18 @@ let
   #  description = "description for the nix flake";
   #  mainProgram = "exported target for nix flake";
   # }
-  mkWrappedNeovim = user-input:
+  mkWrappedNeovim =
+    user-input:
     let
       config-object = config-lib.concatVimConfigurations user-input.layouts;
       nvim-wrapper-object = nvim-wrapper.mkNvimWrapper config-object;
-      final-object = nvim-wrapper-object.overrideAttrs
-        (oldAttrs: {
-          meta = {
-            platforms = oldAttrs.meta.platforms;
-            description = user-input.description;
-            mainProgram = user-input.mainProgram;
-          };
-        });
+      final-object = nvim-wrapper-object.overrideAttrs (oldAttrs: {
+        meta = {
+          platforms = oldAttrs.meta.platforms;
+          description = user-input.description;
+          mainProgram = user-input.mainProgram;
+        };
+      });
     in
     final-object;
 in

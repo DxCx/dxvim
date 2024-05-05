@@ -1,7 +1,6 @@
-{ vimPlugins
-, ...
-}:
-with vimPlugins; [
+{ vimPlugins, ... }:
+with vimPlugins;
+[
   neodev-nvim
 
   cmp-nvim-lua
