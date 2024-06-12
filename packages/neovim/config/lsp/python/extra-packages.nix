@@ -1,12 +1,7 @@
-{
-  pkgs,
-  nodePackages,
-  python311Packages,
-  ...
-}:
+{ pkgs, python311Packages, ... }:
 with pkgs;
 [
-  nodePackages.pyright
+  pyright
 
   mypy
   ruff
