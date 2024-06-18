@@ -30,12 +30,12 @@ let
   };
   refactoring-nvim = vimUtils.buildVimPlugin {
     pname = "refactoring-nvim";
-    version = "unstable-2024-03-15";
+    version = "unstable-2024-06-15";
     src = fetchFromGitHub {
       owner = "ThePrimeagen";
       repo = "refactoring.nvim";
-      rev = "d2786877c91aa409c824f27b4ce8a9f560dda60a";
-      sha256 = "0s0pd2b9hnz4rbgva1xad7lzg8z8mq7j8x15ppnrw6bplx5m35jd";
+      rev = "e6b10b2346bd7e469a5f17099775ad906da153ae";
+      sha256 = "1m0ah5f1w18g7y78ra78yczzpdb4giwk9hsig3379f26xz5fknp2";
     };
   };
 in
