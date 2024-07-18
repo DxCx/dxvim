@@ -7,12 +7,12 @@
 let
   copilot-chat-nvim = vimUtils.buildVimPlugin {
     pname = "copilot-chat-nvim";
-    version = "unstable-2024-06-01";
+    version = "unstable-2024-07-17";
     src = fetchFromGitHub {
       owner = "CopilotC-Nvim";
       repo = "CopilotChat.nvim";
-      rev = "82923efe22b604cf9c0cad0bb2a74aa9247755ab";
-      sha256 = "0dh4hy62xjd8kjnmcflrsdj02b6wrakzppcawfj8r7w1nnbsmlbd";
+      rev = "92bc7b5e564c23b12b2ed41dd7657fdafe39d95f";
+      sha256 = "05qb3817bp7mmqvaqhcy3cffqfbcmryymjd357vxqaw30b44rxmz";
     };
   };
 in
