@@ -20,6 +20,7 @@ with vimPlugins;
 [
   # Icons (For Dashboard)
   nvim-web-devicons
+  mini-nvim
 
   # Dashboard
   dashboard-nvim
