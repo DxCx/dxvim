@@ -6,7 +6,7 @@ vim.cmd.dxvim.enable_lsp("flow", {
 })
 
 -- Typescript
-vim.cmd.dxvim.enable_lsp("tsserver", {
+vim.cmd.dxvim.enable_lsp("ts_ls", {
 	null_ls_setup = { "formatting.prettier", "diagnostics.tsc" },
 	lsp_setup = {
 		settings = {
