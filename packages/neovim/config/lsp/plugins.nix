@@ -10,12 +10,12 @@ let
   lspecho = vimUtils.buildVimPlugin {
     # echo lsp background progress to statusline
     pname = "lspecho-nvim";
-    version = "unstable-2024-02-28";
+    version = "unstable-2024-10-06";
     src = fetchFromGitHub {
       owner = "deathbeam";
       repo = "lspecho.nvim";
-      rev = "5aab80359269f0c70010f50464a6df0d0c318c08";
-      sha256 = "156n5v2rbbpkvahvgh2f3d4d0130cknbwxa010clvz65q0km1fh7";
+      rev = "6b00e2ed29a1f7b254a07d4b8a918ebf855026e5";
+      sha256 = "0z45b0mk7hd5h9d79318nyhhyhprwr929rpqfbblk5x0j4x2glxf";
     };
   };
   tree-sitter-playground = vimUtils.buildVimPlugin {
