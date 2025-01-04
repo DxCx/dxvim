@@ -96,6 +96,7 @@ copilot.setup({
 		gitcommit = true,
 		markdown  = true,
 		yaml      = true,
+		plantuml  = true,
 	}
 })
 copilot_cmp.setup()

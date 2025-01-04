@@ -1,18 +1,29 @@
-{ vimPlugins, fetchFromGitHub, ... }:
+{
+  vimPlugins,
+  tree-sitter,
+  fetchFromGitHub,
+  ...
+}:
 let
   origianl-nvim-treesitter = vimPlugins.nvim-treesitter;
 
-  updated-treesitter = origianl-nvim-treesitter;
-  # updated-treesitter = origianl-nvim-treesitter.overrideAttrs (old: {
-  #   version = "2023-08-07";
-  #   src = fetchFromGitHub {
-  #     owner = "nvim-treesitter";
-  #     repo = "nvim-treesitter";
-  #     rev = "2051c8603d572c5a0b23225549fd7d735adf115f";
-  #     sha256 = "1mkgc69rgvhwnbbd2hihksrxwfjp4vcn0yglcz4v5xqaa96pf71c";
-  #   };
-  # });
+  updated-treesitter = origianl-nvim-treesitter.withPlugins (
+    _:
+    origianl-nvim-treesitter.allGrammars
+    ++ [
+      (tree-sitter.buildGrammar {
+        language = "plantuml";
+        version = "unstable-2021-12-09";
+        src = fetchFromGitHub {
+          owner = "lyndsysimon";
+          repo = "tree-sitter-plantuml";
+          rev = "fe25cf8592ea12ad6de00379a444d376ba32c7b5";
+          sha256 = "0cd78pp8blg4s56g9g6ia416965smdlafyyn3biks887nqji00mw";
+        };
+      })
+    ]
+  );
 
-  res = updated-treesitter.withAllGrammars;
+  res = updated-treesitter;
 in
 res
