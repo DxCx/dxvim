@@ -18,16 +18,6 @@ let
       sha256 = "02g3b7ymgzrv95g4kxc58kydldikynw92ks519rznciw1ddl0s2d";
     };
   };
-  tree-sitter-playground = vimUtils.buildVimPlugin {
-    pname = "tree-sitter-playground";
-    version = "unstable-2023-09-15";
-    src = fetchFromGitHub {
-      owner = "nvim-treesitter";
-      repo = "playground";
-      rev = "ba48c6a62a280eefb7c85725b0915e021a1a0749";
-      sha256 = "1vgj5vc32ly15ni62fk51yd8km2zp3fkzx0622x5cv9pavmjpr40";
-    };
-  };
   refactoring-nvim = vimUtils.buildVimPlugin {
     pname = "refactoring-nvim";
     version = "unstable-2024-11-19";
@@ -44,7 +34,6 @@ with vimPlugins;
   # Syntax
   rainbow-delimiters-nvim
   nvim-treesitter
-  tree-sitter-playground
   vim-illuminate
 
   # Basic LSP & utilites related
