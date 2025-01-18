@@ -1,7 +1,5 @@
 {
   vimPlugins,
-  vimUtils,
-  fetchFromGitHub,
   ...
 }:
 with vimPlugins;
