@@ -9,4 +9,5 @@ with vimPlugins;
   todo-comments-nvim
   delimitMate
   editorconfig-nvim
+  snacks-nvim
 ]
