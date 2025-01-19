@@ -257,7 +257,7 @@ snacks.setup({
 	},
 	debug = { enabled = false },
 	dim = {
-		enabled = true,
+		enabled = false,
 		scope = {
 			min_size = 5,
 			max_size = 20,
@@ -710,7 +710,7 @@ snacks.setup({
 		refresh = 50,
 	},
 	terminal = { enabled = false },
-	toggle = { enabled = false },
+	toggle = { enabled = true },
 	win = { enabled = true },
 	words = { enabled = true },
 	--- NOTE: Abit annoying, trying dim only
@@ -742,10 +742,6 @@ snacks.setup({
 which_key.register({
 	t = {
 		name = "Toggle",
-		z = { function() Snacks.dim() end, "Toggle Zen Mode" },
 		g = { function() Snacks.lazygit() end, "Toggle LazyGIT overlay" },
 	}
 }, { mode = "n", prefix = "<leader>" })
-
--- Toggled ON by default.
-Snacks.dim()
