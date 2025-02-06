@@ -2,7 +2,7 @@
 
 with pkgs;
 [
-  clang-tools_17
+  clang-tools_18
 
   clazy
 ]
