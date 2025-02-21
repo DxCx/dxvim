@@ -8,5 +8,12 @@ let
   args = { inherit config lib pkgs; };
 in
 {
-  config.vim = import ./general.nix args;
+  config.vim = lib.mkMerge [
+    (import ./assistant.nix args)
+    (import ./dashboard.nix args)
+    (import ./general.nix args)
+    (import ./navigation.nix args)
+    (import ./theme.nix args)
+    (import ./ui.nix args)
+  ];
 }
