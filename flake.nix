@@ -30,6 +30,7 @@
         # Create custom nvim package
         customNeovim = nvf.lib.neovimConfiguration {
           modules = [
+            ./modules
             ./config
           ];
           inherit pkgs;
