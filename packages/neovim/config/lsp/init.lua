@@ -244,6 +244,18 @@ local g_client_capabilities = {
 	end,
 }
 
+local function complete_or_action(action)
+	return cmp.mapping({
+		i = function()
+			if cmp.visible() then
+				action()
+			else
+				cmp.complete()
+			end
+		end
+	})
+end
+
 local g_cmp_setup = {
 	completion = {
 		completeopt = "menu,menuone",
@@ -298,19 +310,18 @@ local g_cmp_setup = {
 		{ name = "path",   group_index = 3, keyword_length = 3 },
 		{ name = "buffer", group_index = 3, keyword_length = 2 },
 	},
-	mapping = cmp.mapping.preset.insert {
-		["<C-j>"] = cmp.mapping.scroll_docs(4),
-		["<C-k>"] = cmp.mapping.scroll_docs(-4),
-		["<C-Space>"] = cmp.mapping.complete(),
-		["<CR>"] = cmp.mapping.confirm {
-			behavior = cmp.ConfirmBehavior.Replace,
-			select = true,
-		},
+	mapping = {
+		["<c-j>"] = cmp.mapping.scroll_docs(4),
+		["<c-k>"] = cmp.mapping.scroll_docs(-4),
+		["<esc>"] = cmp.mapping.abort(),
+		["<c-y>"] = complete_or_action(function() cmp.confirm({ select = true }) end),
+		["<c-n>"] = complete_or_action(cmp.select_next_item),
+		["<c-p>"] = complete_or_action(cmp.select_prev_item),
 
-		-- Let copilot take over tab, using cmp as normal vim binding c+p/n
-		["<Tab>"] = cmp_next,
-		["<S-Tab>"] = cmp_prev,
-	},
+		-- let copilot take over tab, using cmp as normal vim binding c+p/n
+		["<tab>"] = cmp_next,
+		["<s-tab>"] = cmp_prev,
+	}
 }
 
 local function is_null_ls_formatting_enabed(bufnr)
