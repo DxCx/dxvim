@@ -73,8 +73,13 @@ which_key.register({
 	},
 }, { mode = "n", noremap = true, silent = true, prefix = "<leader>" })
 
-copilot_chat.setup({})
+copilot_chat.setup({
+	model = "claude-3.5-sonnet",
+})
 
+-- TODO: Selecting agent for copilot cmp is not supported yet,
+-- but have feature request (https://github.com/zbirenbaum/copilot.lua/issues/365)
+-- Check again later.
 copilot.setup({
 	suggestion = { enabled = false },
 	panel = {
