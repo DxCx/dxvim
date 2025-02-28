@@ -12,7 +12,6 @@ wrapped-neovim.mkWrappedNeovim {
     }
     ./config/which-key
     ./config/direnv
-    ./config/movement
     ./config/maximizer
     ./config/filetree
     ./config/undotree

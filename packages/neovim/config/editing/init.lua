@@ -4,9 +4,22 @@ local todo = require("todo-comments")
 local surround = require("nvim-surround")
 local comment = require("nvim_comment")
 local snacks = require("snacks")
+local mini_jump2d = require('mini.jump2d')
 
 surround.setup()
 comment.setup()
+
+-- Plugin for leap/hop functionality - display a 2D grid of characters to jump to.
+mini_jump2d.setup({
+	view = { dim = true },
+	mappings = {
+		start_jumping = "",
+	},
+})
+which_key.register({
+	w = { mini_jump2d.start, "Jump 2D" },
+	b = { mini_jump2d.start, "Jump 2D" },
+}, { mode = "n" })
 
 -- TODO: Comments enhancement and tracking
 todo.setup()
