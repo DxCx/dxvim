@@ -12,13 +12,54 @@ comment.setup()
 -- Plugin for leap/hop functionality - display a 2D grid of characters to jump to.
 mini_jump2d.setup({
 	view = { dim = true },
+	allowed_windows = {
+		current = true,
+		not_current = false,
+	},
 	mappings = {
 		start_jumping = "",
 	},
 })
+
+local H = {}
+local my_spotter = (function()
+	local word_start = mini_jump2d.gen_pattern_spotter('[^%s%p]+', 'start')
+	local word_end = mini_jump2d.gen_pattern_spotter('[^%s%p]+', 'end')
+
+	return function(line_num, args)
+		return vim.cmd.dxvim.table_merge(word_start(line_num, args), word_end(line_num, args))
+	end
+end)()
+
+local jump_forward = function()
+	mini_jump2d.start({
+		spotter = my_spotter,
+		allowed_lines = {
+			blank = false, -- Blank line (not sent to spotter even if `true`)
+			cursor_before = false, -- Lines before cursor line
+			cursor_at = true, -- Cursor line
+			cursor_after = true, -- Lines after cursor line
+			fold = false, -- Start of fold (not sent to spotter even if `true`)
+		}
+	})
+end
+
+local jump_backward = function()
+	mini_jump2d.start({
+		spotter = my_spotter,
+		allowed_lines = {
+			blank = false, -- Blank line (not sent to spotter even if `true`)
+			cursor_before = true, -- Lines before cursor line
+			cursor_at = true, -- Cursor line
+			cursor_after = false, -- Lines after cursor line
+			fold = false, -- Start of fold (not sent to spotter even if `true`)
+		}
+	})
+end
+
 which_key.register({
-	w = { mini_jump2d.start, "Jump 2D" },
-	b = { mini_jump2d.start, "Jump 2D" },
+	w = { jump_forward, "Jump 2D (Forward)" },
+	b = { jump_backward, "Jump 2D (Backward)" },
 }, { mode = "n" })
 
 -- TODO: Comments enhancement and tracking
