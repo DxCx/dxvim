@@ -36,8 +36,13 @@ wrapped-neovim.mkWrappedNeovim {
     ./config/lsp/diagram
     ./config/lsp/rust
 
-    # Also After LSP as it integrates to it.
+    # Assistant
+    # Copilot/Chat plugins
     ./config/copilot
+    # Alternative CodeCompanion - Not good enough yet..
+    # ./config/code-companion
+
+    # Also After LSP as it integrates to it.
     ./config/telescope
     ./config/navic
 
