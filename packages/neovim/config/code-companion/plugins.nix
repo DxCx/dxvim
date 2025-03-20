@@ -11,12 +11,12 @@ let
 
   codecompanion-nvim = vimUtils.buildVimPlugin {
     pname = "codecompanion.nvim";
-    version = "unstable-2025-03-13";
+    version = "unstable-2025-03-20";
     src = fetchFromGitHub {
       owner = "olimorris";
       repo = "codecompanion.nvim";
-      rev = "4f56b047f03bf5edc0d71bf0ca694243a49b912f";
-      sha256 = "1mrb8qxd6mz5dlly9bh30pcd599gfy173f6pd4p8lszs3xhp598k";
+      rev = "a344661b8c1eaae9a56db5c36e7f5d2101b69128";
+      sha256 = "1gyakqjxxfxd27wc570c3qprinsgb7c9faq5fwx94nzybyi63ik3";
     };
 
     inherit dependencies;
