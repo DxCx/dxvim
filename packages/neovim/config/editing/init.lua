@@ -10,8 +10,9 @@ surround.setup()
 comment.setup()
 
 -- Plugin for leap/hop functionality - display a 2D grid of characters to jump to.
+local mini_jump_step_ahead = 1
 mini_jump2d.setup({
-	view = { dim = true },
+	view = { dim = true, n_steps_ahead = mini_jump_step_ahead },
 	allowed_windows = {
 		current = true,
 		not_current = false,
@@ -21,19 +22,41 @@ mini_jump2d.setup({
 	},
 })
 
-local H = {}
-local my_spotter = (function()
+local my_spotter = function()
 	local word_start = mini_jump2d.gen_pattern_spotter('[^%s%p]+', 'start')
 	local word_end = mini_jump2d.gen_pattern_spotter('[^%s%p]+', 'end')
+	local total_spots = 26 * (1 + mini_jump_step_ahead)
 
 	return function(line_num, args)
-		return vim.cmd.dxvim.table_merge(word_start(line_num, args), word_end(line_num, args))
+		if total_spots == 0 then
+			return {}
+		end
+
+		local start_spots = word_start(line_num, args)
+		local end_spots = word_end(line_num, args)
+		local all_spots = {}
+		for i = 1, math.max(#start_spots, #end_spots) do
+			if total_spots and start_spots[i] then
+				table.insert(all_spots, start_spots[i])
+				total_spots = total_spots - 1
+			end
+			if total_spots and end_spots[i] then
+				table.insert(all_spots, end_spots[i])
+				total_spots = total_spots - 1
+			end
+
+			if total_spots == 0 then
+				break
+			end
+		end
+
+		return all_spots
 	end
-end)()
+end
 
 local jump_forward = function()
 	mini_jump2d.start({
-		spotter = my_spotter,
+		spotter = my_spotter(),
 		allowed_lines = {
 			blank = false, -- Blank line (not sent to spotter even if `true`)
 			cursor_before = false, -- Lines before cursor line
@@ -46,7 +69,7 @@ end
 
 local jump_backward = function()
 	mini_jump2d.start({
-		spotter = my_spotter,
+		spotter = my_spotter(),
 		allowed_lines = {
 			blank = false, -- Blank line (not sent to spotter even if `true`)
 			cursor_before = true, -- Lines before cursor line
