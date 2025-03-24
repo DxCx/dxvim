@@ -11,4 +11,5 @@ with vimPlugins;
   delimitMate
   editorconfig-nvim
   snacks-nvim
+  stay-centered-nvim
 ]
