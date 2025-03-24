@@ -22,41 +22,94 @@ mini_jump2d.setup({
 	},
 })
 
-local my_spotter = function()
+local my_spotter = function(backwards)
 	local word_start = mini_jump2d.gen_pattern_spotter('[^%s%p]+', 'start')
 	local word_end = mini_jump2d.gen_pattern_spotter('[^%s%p]+', 'end')
 	local total_spots = 26 * (1 + mini_jump_step_ahead)
+	local cached_spots = nil
+	local last_cursor_pos = nil
+
+	local function build_cache()
+		local cursor_line = vim.api.nvim_win_get_cursor(0)[1]
+		local lines = vim.api.nvim_buf_line_count(0)
+		local all_spots_by_line = {}
+		local spots_count = 0
+
+		-- First pass: collect all spots
+		for line_num = 1, lines do
+			local start_spots = word_start(line_num, {})
+			local end_spots = word_end(line_num, {})
+			local line_spots = {}
+
+			for i = 1, math.max(#start_spots, #end_spots) do
+				if start_spots[i] then
+					table.insert(line_spots, start_spots[i])
+					spots_count = spots_count + 1
+				end
+				if end_spots[i] then
+					table.insert(line_spots, end_spots[i])
+					spots_count = spots_count + 1
+				end
+			end
+
+			if #line_spots > 0 then
+				all_spots_by_line[line_num] = line_spots
+			end
+		end
+
+		-- Second pass: select only the spots we want to show
+		local final_spots_by_line = {}
+		local spots_to_keep = math.min(total_spots, spots_count)
+
+		if backwards then
+			local count = 0
+			-- Go from cursor up to start
+			for line_num = cursor_line, 1, -1 do
+				if all_spots_by_line[line_num] then
+					final_spots_by_line[line_num] = all_spots_by_line[line_num]
+					count = count + #all_spots_by_line[line_num]
+					if count >= spots_to_keep then
+						break
+					end
+				end
+			end
+		else
+			local count = 0
+			-- Go from cursor to end
+			for line_num = cursor_line, lines do
+				if all_spots_by_line[line_num] then
+					final_spots_by_line[line_num] = all_spots_by_line[line_num]
+					count = count + #all_spots_by_line[line_num]
+					if count >= spots_to_keep then
+						break
+					end
+				end
+			end
+		end
+
+		return {
+			spots = final_spots_by_line,
+			cursor_pos = cursor_line
+		}
+	end
 
 	return function(line_num, args)
-		if total_spots == 0 then
-			return {}
+		local cursor_line = vim.api.nvim_win_get_cursor(0)[1]
+
+		-- Rebuild cache if cursor moved or cache doesn't exist
+		if not cached_spots or last_cursor_pos ~= cursor_line then
+			cached_spots = build_cache()
+			last_cursor_pos = cursor_line
 		end
 
-		local start_spots = word_start(line_num, args)
-		local end_spots = word_end(line_num, args)
-		local all_spots = {}
-		for i = 1, math.max(#start_spots, #end_spots) do
-			if total_spots and start_spots[i] then
-				table.insert(all_spots, start_spots[i])
-				total_spots = total_spots - 1
-			end
-			if total_spots and end_spots[i] then
-				table.insert(all_spots, end_spots[i])
-				total_spots = total_spots - 1
-			end
-
-			if total_spots == 0 then
-				break
-			end
-		end
-
-		return all_spots
+		-- Return spots for this line from cache
+		return cached_spots.spots[line_num] or {}
 	end
 end
 
 local jump_forward = function()
 	mini_jump2d.start({
-		spotter = my_spotter(),
+		spotter = my_spotter(false),
 		allowed_lines = {
 			blank = false, -- Blank line (not sent to spotter even if `true`)
 			cursor_before = false, -- Lines before cursor line
@@ -69,7 +122,7 @@ end
 
 local jump_backward = function()
 	mini_jump2d.start({
-		spotter = my_spotter(),
+		spotter = my_spotter(true),
 		allowed_lines = {
 			blank = false, -- Blank line (not sent to spotter even if `true`)
 			cursor_before = true, -- Lines before cursor line
