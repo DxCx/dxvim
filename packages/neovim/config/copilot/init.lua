@@ -77,10 +77,8 @@ copilot_chat.setup({
 	model = "claude-3.5-sonnet",
 })
 
--- TODO: Selecting agent for copilot cmp is not supported yet,
--- but have feature request (https://github.com/zbirenbaum/copilot.lua/issues/365)
--- Check again later.
 copilot.setup({
+	--	copilot_model = "gpt-4o-copilot",
 	suggestion = { enabled = false },
 	panel = {
 		enabled = true,
