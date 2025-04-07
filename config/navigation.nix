@@ -86,6 +86,7 @@
     keymaps = hopKeyBindings;
   };
 in
-  {}
-  // hopConfig
-  // telescopeConfig
+  lib.mkMerge [
+    hopConfig
+    telescopeConfig
+  ]
