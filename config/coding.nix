@@ -2,9 +2,15 @@
   # LSP configuration
   lsp = {
     formatOnSave = true;
-    lspkind.enable = false;
-    lightbulb.enable = true;
-    lspsaga.enable = false;
+    lspkind.enable = true;
+    # Lightbulb icon when cursor on word that has code action attached to it.
+    lightbulb.enable = false;
+    lspsaga = {
+      enable = true;
+      setupOpts = {
+        lightbulb.enable = false;
+      };
+    };
     trouble.enable = true;
     otter-nvim.enable = false;
     lsplines.enable = false;
@@ -64,6 +70,10 @@
     # TODO: Docker
 
     # TODO: Diagram / PlantUML
+
+    # TODO: CMake
+
+    # TODO: Don't have diagnostics in place, trouble? and what is the annoying bulb?????
 
     # Web configuration
     ts = {

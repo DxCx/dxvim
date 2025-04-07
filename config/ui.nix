@@ -40,9 +40,14 @@ in
     # Visuals configuration
     visuals = {
       nvim-web-devicons.enable = true;
+
+      # Highlights the whole line the cursor is at.
       nvim-cursorline.enable = true;
-      cinnamon-nvim.enable = true;
+
+      # Nicer loading progress on bottom right (Lsp for example)
       fidget-nvim.enable = true;
+
+      # When pressing undo, will blink around the undo area.
       highlight-undo.enable = true;
     };
 
@@ -50,7 +55,9 @@ in
     mini.icons.enable = true;
     ui = {
       borders.enable = true;
+      # Color codes rendering in place
       colorizer.enable = true;
+      # places underscore under the variable name the cursor is at
       illuminate.enable = true;
       breadcrumbs = {
         enable = false;
