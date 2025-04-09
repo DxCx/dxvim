@@ -74,6 +74,9 @@ in
 
       # When pressing undo, will blink around the undo area.
       highlight-undo.enable = true;
+
+      # Show matching delimiters with matching rainbow color.
+      rainbow-delimiters.enable = true;
     };
 
     # UI configuration
