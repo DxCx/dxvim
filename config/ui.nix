@@ -79,6 +79,9 @@ in
       rainbow-delimiters.enable = true;
     };
 
+    # Enable TODO/FIXME highlighting
+    notes.todo-comments.enable = true;
+
     # UI configuration
     mini.icons.enable = true;
     ui = {
