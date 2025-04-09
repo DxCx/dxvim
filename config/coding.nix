@@ -1,111 +1,134 @@
-{pkgs, ...}: {
-  # LSP configuration
-  lsp = {
-    formatOnSave = true;
-    lspkind.enable = true;
-    # Lightbulb icon when cursor on word that has code action attached to it.
-    lightbulb.enable = false;
-    lspsaga = {
-      enable = true;
-      setupOpts = {
-        lightbulb.enable = false;
+{
+  pkgs,
+  lib,
+  ...
+}: let
+  inherit (lib.nvim.binds) mkKeymap;
+
+  # C/C++ configuration
+  clangConfig = {
+    keymaps = [
+      (mkKeymap "n" "gh" "<cmd>ClangdSwitchSourceHeader<CR>" {desc = "Switch Source/Header [clangd]";})
+    ];
+    languages = {
+      clang = {
+        enable = true;
+        # Downgrade for compatability with NS
+        lsp.package = pkgs.clang-tools_17;
       };
     };
-    trouble.enable = true;
-    otter-nvim.enable = false;
-    nvim-docs-view.enable = false;
   };
+in
+  lib.mkMerge [
+    clangConfig
 
-  # Language configuration
-  # TODO: integrate lsp-inlayhints
-  # TODO: Lsp key bindings?
-  # TODO: Integrate reafactoring? Check out if needed with nvim 0.11 oob functionality
-  languages = {
-    enableLSP = true;
-    enableFormat = true;
-    enableTreesitter = true;
-    enableExtraDiagnostics = true;
+    {
+      # LSP configuration
+      lsp = {
+        formatOnSave = true;
+        lspkind.enable = true;
+        # Lightbulb icon when cursor on word that has code action attached to it.
+        lightbulb.enable = false;
+        lspsaga = {
+          enable = true;
+          setupOpts = {
+            lightbulb.enable = false;
+          };
+        };
+        trouble.enable = true;
+        otter-nvim.enable = false;
+        nvim-docs-view.enable = false;
+        inlayHints.enable = true;
+      };
 
-    ### Language specific configurations
-    nix = {
-      enable = true;
-    };
+      diagnostics = {
+        enable = true;
+        config = {
+          virtual_lines = true;
+        };
+      };
 
-    markdown = {
-      enable = true;
-    };
+      # Language configuration
+      # TODO: Lsp key bindings?
+      # TODO: Integrate reafactoring? Check out if needed with nvim 0.11 oob functionality
+      languages = {
+        enableLSP = true;
+        enableFormat = true;
+        enableTreesitter = true;
+        enableExtraDiagnostics = true;
 
-    bash = {
-      enable = true;
-    };
+        ### Language specific configurations
+        nix = {
+          enable = true;
+        };
 
-    # Asm Configuration
-    assembly = {
-      enable = true;
-    };
+        markdown = {
+          enable = true;
+        };
 
-    # C/C++ configuration
-    clang = {
-      enable = true;
-      # Downgrade for compatability with NS
-      lsp.package = pkgs.clang-tools_17;
-    };
+        bash = {
+          enable = true;
+        };
 
-    # Lua configuration
-    lua = {
-      enable = true;
-    };
+        # Asm Configuration
+        assembly = {
+          enable = true;
+        };
 
-    # Python configuration
-    python = {
-      enable = true;
-    };
+        # Lua configuration
+        lua = {
+          enable = true;
+        };
 
-    # Rust configuration
-    rust = {
-      enable = true;
-    };
+        # Python configuration
+        python = {
+          enable = true;
+        };
 
-    # TODO: Docker
+        # Rust configuration
+        rust = {
+          enable = true;
+        };
 
-    # TODO: Diagram / PlantUML
+        # TODO: Docker
 
-    # TODO: CMake
+        # TODO: Diagram / PlantUML
 
-    # TODO: Don't have diagnostics in place, trouble? and what is the annoying bulb?????
+        # TODO: CMake
 
-    # Web configuration
-    ts = {
-      enable = true;
-    };
+        # Web configuration
+        ts = {
+          enable = true;
+        };
 
-    html = {
-      enable = true;
-    };
+        html = {
+          enable = true;
+        };
 
-    css = {
-      enable = true;
-    };
+        css = {
+          enable = true;
+        };
 
-    sql = {
-      enable = true;
-    };
+        sql = {
+          enable = true;
+        };
 
-    # TODO: GraphQL
+        # TODO: GraphQL
 
-    # TODO: Javascript?
-  };
+        # TODO: Javascript?
+      };
 
-  # Treesitter context configuration
-  mini.ai.enable = true;
-  treesitter = {
-    indent.enable = true;
-    highlight.enable = true;
-    context.enable = true;
-  };
+      # Treesitter context configuration
+      mini.ai.enable = true;
+      treesitter = {
+        indent.enable = true;
+        highlight.enable = true;
+        context.enable = true;
+      };
 
-  # Comments configuration
-  comments = {
-    comment-nvim.enable = true;
-  };
-}
+      # Comments configuration
+      comments = {
+        comment-nvim.enable = true;
+      };
+    }
+  ]
