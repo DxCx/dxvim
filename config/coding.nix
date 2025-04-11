@@ -5,6 +5,43 @@
 }: let
   inherit (lib.nvim.binds) mkKeymap;
 
+  refactoringNvim = {
+    lazy.plugins = {
+      "refactoring.nvim" = {
+        package = pkgs.vimPlugins.refactoring-nvim;
+        lazy = false;
+        setupModule = "refactoring";
+        setupOpts = {};
+      };
+    };
+    keymaps = [
+      (mkKeymap "x" "<leader>cre" "<cmd>Refactor extract<CR>" {desc = "Extract [refactoring]";})
+      (mkKeymap "x" "<leader>crf" "<cmd>Refactor extract_to_file<CR>" {desc = "Extract to file [refactoring]";})
+      (mkKeymap "x" "<leader>crv" "<cmd>Refactor extract_var<CR>" {desc = "Extract variable [refactoring]";})
+      (mkKeymap ["n" "x"] "<leader>cri" "<cmd>Refactor inline_var<CR>" {desc = "Inline variable [refactoring]";})
+      (mkKeymap "n" "<leader>crI" "<cmd>Refactor inline_func<CR>" {desc = "Inline function [refactoring]";})
+      (mkKeymap "n" "<leader>crb" "<cmd>Refactor extract_block<CR>" {desc = "Extract block [refactoring]";})
+      (mkKeymap "n" "<leader>crbf" "<cmd>Refactor extract_block_to_file<CR>" {desc = "Extract block to file [refactoring]";})
+    ];
+  };
+
+  lspMappings = {
+    lsp = {
+      mappings = {
+        goToDefinition = "gd";
+        goToDeclaration = "gD";
+        nextDiagnostic = "[d";
+        previousDiagnostic = "]d";
+        signatureHelp = "<C-k>";
+        renameSymbol = "<leader>crr";
+        codeAction = "<leader>ca";
+        format = "=";
+        toggleFormatOnSave = "<leader>tf";
+        # TODO: Toggle Inlay hints?
+      };
+    };
+  };
+
   # C/C++ configuration
   clangConfig = {
     keymaps = [
@@ -21,6 +58,8 @@
 in
   lib.mkMerge [
     clangConfig
+    lspMappings
+    refactoringNvim
 
     {
       # LSP configuration
@@ -49,8 +88,6 @@ in
       };
 
       # Language configuration
-      # TODO: Lsp key bindings?
-      # TODO: Integrate reafactoring? Check out if needed with nvim 0.11 oob functionality
       languages = {
         enableLSP = true;
         enableFormat = true;
