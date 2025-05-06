@@ -64,6 +64,7 @@ in
     {
       # LSP configuration
       lsp = {
+        enable = true;
         formatOnSave = true;
         lspkind.enable = true;
         # Lightbulb icon when cursor on word that has code action attached to it.
@@ -89,7 +90,6 @@ in
 
       # Language configuration
       languages = {
-        enableLSP = true;
         enableFormat = true;
         enableTreesitter = true;
         enableExtraDiagnostics = true;
