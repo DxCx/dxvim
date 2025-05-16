@@ -15,16 +15,14 @@
     };
   };
 
-  outputs =
-    {
-      nixpkgs,
-      flake-utils,
-      nvf,
-      ...
-    }:
+  outputs = {
+    nixpkgs,
+    flake-utils,
+    nvf,
+    ...
+  }:
     flake-utils.lib.eachDefaultSystem (
-      system:
-      let
+      system: let
         pkgs = nixpkgs.legacyPackages.${system};
 
         # Create custom nvim package
@@ -35,8 +33,7 @@
           ];
           inherit pkgs;
         };
-      in
-      {
+      in {
         packages.default = customNeovim.neovim;
       }
     );
