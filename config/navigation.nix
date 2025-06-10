@@ -1,4 +1,8 @@
-{lib, ...}: let
+{
+  lib,
+  pkgs,
+  ...
+}: let
   inherit (lib.nvim.binds) mkKeymap;
   inherit (lib.generators) mkLuaInline;
   inherit (lib.nvim.dag) entryAnywhere;
@@ -65,6 +69,18 @@
   };
 
   # hop config, Inside buffer
+  # See https://github.com/phaazon/hop.nvim/issues/345
+  hop-nvim-patched = pkgs.vimPlugins.hop-nvim.overrideAttrs (_: {
+    version = "unstable-2022-11-08";
+    src = pkgs.fetchFromGitHub {
+      #owner = "phaazon";
+      owner = "aznhe21";
+      repo = "hop.nvim";
+      rev = "a7454d16a762a2f50f235e68f35b30b0f20f3a35";
+      sha256 = "0v4h0axz66ijwn4xms2j1rrsm7jc0mk30kngkgfbcnv3bf4xmr95";
+    };
+  });
+
   hopKeyBindings = [
     (mkKeymap "n" "<leader>p" "<cmd>HopPattern<CR>" {desc = "Hop To Pattern";})
     (mkKeymap "n" "<leader>a" "<cmd>HopAnywhere<CR>" {desc = "Hop Anywhere";})
@@ -78,9 +94,17 @@
         leap.enable = false;
         precognition.enable = false;
         hop = {
-          enable = true;
+          enable = false;
           mappings.hop = null;
         };
+      };
+    };
+    lazy.plugins = {
+      "hop.nvim" = {
+        package = hop-nvim-patched;
+        lazy = false;
+        setupModule = "hop";
+        setupOpts = {};
       };
     };
     keymaps = hopKeyBindings;
