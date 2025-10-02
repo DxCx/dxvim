@@ -1,0 +1,334 @@
+# DxVim - Professional Neovim Configuration Repository Rules
+
+This repository contains a professional-grade Neovim configuration built with the nvf (Neovim Flake) framework. The configuration follows industry best practices for maximum developer productivity and is designed by a developer with 30+ years of experience.
+
+## 🚨 CRITICAL: Always Ask Before Changing
+
+**Before making ANY changes to files, you MUST:**
+
+1. **Make a Simple Plan**: Explain what you're going to do in simple language (like explaining to a 6-year-old):
+   - What files you'll change
+   - What each change will do
+   - Why it's needed
+
+2. **Ask for Confirmation**: Wait for the user to say "yes" or "go ahead" before making any changes
+
+3. **Only Change What's Asked**: Avoid changing things the user didn't ask for (like keybindings, default values, or file structure) unless explicitly requested. If you think such changes are needed, ask first!
+
+**Example:**
+```
+User: "Fix the telescope plugin to use the new API"
+
+AI: "Here's my plan:
+
+I need to fix how we talk to the telescope plugin. Right now we're using old commands that don't work anymore.
+
+I'll change these things:
+1. File: modules/navigation/telescope/config.nix
+   - Change: Replace 'require("telescope").find()' with 'require("telescope.builtin").find_files()'
+   - Why: The plugin moved the find function to a different place
+
+2. File: flake.nix
+   - Change: Add 'ripgrep' to the extraPackages list
+   - Why: Telescope needs this tool to search files
+
+I'll keep the same:
+- Keybindings (unless you want me to change them?)
+- Default configuration values
+- File structure
+
+Should I go ahead with these changes?"
+```
+
+**DO NOT proceed until user confirms!**
+
+## 📥 Efficient File Downloading
+
+**When fetching external files (like documentation or READMEs):**
+
+1. **Download Once**: If you need to curl/fetch an external file, download it to `/tmp/` first
+2. **Reuse Locally**: Use the local copy for all subsequent searches/greps instead of re-downloading
+3. **Cleanup**: The /tmp files will be automatically cleaned on reboot
+
+**Example:**
+```bash
+# First time - download to /tmp
+curl -s 'https://example.com/README.md' -o /tmp/example-readme.md
+
+# Then grep/search the local copy as many times as needed
+grep "pattern" /tmp/example-readme.md
+grep "another pattern" /tmp/example-readme.md
+```
+
+This saves bandwidth and is much faster!
+
+## Core Philosophy
+
+- **Modular Design**: Each feature/plugin is isolated in its own module
+- **nvf-First**: Follow nvf patterns and conventions strictly
+- **Productivity Focus**: Every configuration decision prioritizes developer efficiency
+- **Professional Standards**: Enterprise-ready, maintainable, and scalable
+
+## Repository Architecture
+
+### Directory Structure
+```
+├── flake.nix              # Main flake configuration
+├── config/                # Core configuration modules
+│   ├── default.nix        # Module aggregator
+│   ├── general.nix        # Basic vim settings
+│   ├── coding.nix         # LSP, languages, refactoring
+│   ├── navigation.nix     # Telescope, hop, file navigation
+│   ├── keys.nix           # Global key mappings
+│   ├── theme.nix          # Colorscheme and UI
+│   └── [feature].nix      # Individual feature modules
+├── modules/               # Custom nvf modules
+│   ├── default.nix        # Module aggregator
+│   └── [category]/        # Feature categories
+│       ├── default.nix    # Category aggregator
+│       └── [plugin]/      # Individual plugin modules
+└── README.md              # Documentation
+```
+
+## nvf Module Development Standards
+
+### 1. Module Structure Pattern
+Every custom module MUST follow this exact structure:
+
+```nix
+# options.nix - Define configuration options
+{lib, ...}: let
+  inherit (lib.options) mkEnableOption mkOption;
+  inherit (lib.nvim.types) mkPluginSetupOption;
+  inherit (lib.types) bool str;
+in {
+  options.vim.[category].[plugin-name] = {
+    enable = mkEnableOption "Description of what this module does";
+    setupOpts = mkPluginSetupOption "PluginName" {};
+    # Additional options as needed
+  };
+}
+
+# config.nix - Implementation
+{pkgs, config, lib, ...}: let
+  inherit (lib.modules) mkIf mkMerge;
+  inherit (lib.nvim.dag) entryAnywhere;
+  inherit (lib.nvim.lua) toLuaObject;
+  
+  cfg = config.vim.[category].[plugin-name];
+in {
+  config = mkIf cfg.enable (mkMerge [
+    {
+      vim = {
+        extraPlugins = with pkgs.vimPlugins; {
+          plugin-name = {
+            package = PluginName;
+          };
+        };
+        pluginRC.plugin-name = entryAnywhere ''
+          require("PluginName").setup(${toLuaObject cfg.setupOpts})
+        '';
+      };
+    }
+    # Additional configuration blocks
+  ]);
+}
+
+# default.nix - Module aggregator
+{imports = [./options.nix ./config.nix];}
+```
+
+### 2. Configuration Module Standards
+For `config/` modules, follow this pattern:
+
+```nix
+{config, lib, pkgs, ...}: let
+  inherit (lib.nvim.binds) mkKeymap;
+  inherit (lib.generators) mkLuaInline;
+  inherit (lib.nvim.dag) entryAnywhere;
+  
+  # Configuration blocks
+  featureConfig = {
+    lazy.plugins = {
+      "plugin-name" = {
+        package = pkgs.vimPlugins.plugin-name;
+        setupModule = "PluginName";
+        setupOpts = {
+          # Plugin-specific options
+        };
+        lazy = true; # or false for immediate loading
+        cmd = ["CommandName"]; # Commands that trigger loading
+      };
+    };
+    keymaps = [
+      (mkKeymap "n" "<leader>xx" "<cmd>Command<CR>" {desc = "Description";})
+    ];
+  };
+in
+  lib.mkMerge [
+    featureConfig
+    # Additional configuration blocks
+  ]
+```
+
+## Productivity-Focused Configuration Patterns
+
+### 1. Lazy Loading Strategy
+- **Immediate Loading**: Core functionality (theme, basic settings)
+- **Command Loading**: Utility commands (`cmd = ["CommandName"]`)
+- **Event Loading**: Filetype-specific plugins
+- **Keymap Loading**: Feature-specific keymaps
+
+### 2. Key Mapping Conventions
+```nix
+# Use descriptive descriptions
+(mkKeymap "n" "<leader>ca" "<cmd>CodeAction<CR>" {desc = "Code Action [LSP]";})
+
+# Group related mappings
+(mkKeymap "n" "<leader>cr" "<cmd>Refactor<CR>" {desc = "Refactor [refactoring]";})
+(mkKeymap "x" "<leader>cre" "<cmd>Refactor extract<CR>" {desc = "Extract [refactoring]";})
+
+# Use consistent prefixes
+<leader>t*  # Toggle commands
+<leader>c*  # Code/LSP commands  
+<leader>p*  # Project/navigation commands
+```
+
+### 3. Plugin Configuration Standards
+```nix
+lazy.plugins = {
+  "plugin-name" = {
+    package = pkgs.vimPlugins.plugin-name;
+    setupModule = "PluginName";
+    setupOpts = {
+      # Always configure with explicit options
+      # Never rely on defaults
+    };
+    lazy = true; # Default to lazy loading
+    cmd = ["CommandName"]; # Specify trigger commands
+    ft = ["filetype"]; # Filetype-specific loading
+  };
+};
+```
+
+### 4. Language Support Pattern
+```nix
+languages = {
+  language-name = {
+    enable = true;
+    lsp = {
+      package = pkgs.language-server; # Custom LSP if needed
+    };
+  };
+};
+```
+
+## Professional Development Standards
+
+### 1. Code Organization
+- **Single Responsibility**: Each module handles one feature/plugin
+- **Clear Separation**: Configuration vs. implementation vs. options
+- **Consistent Naming**: Use descriptive, consistent naming conventions
+- **Documentation**: Comment complex configurations and custom Lua code
+
+### 2. Performance Optimization
+- **Lazy Loading**: Load plugins only when needed
+- **Debounce Settings**: Configure appropriate debounce times
+- **Memory Management**: Avoid memory leaks in Lua code
+- **Startup Time**: Monitor and optimize startup performance
+
+### 3. Error Handling
+- **Graceful Degradation**: Handle missing dependencies gracefully
+- **Validation**: Validate configuration options
+- **Fallbacks**: Provide fallback configurations when possible
+
+### 4. Testing and Validation
+- **Module Testing**: Test each module independently
+- **Integration Testing**: Verify module interactions
+- **Performance Testing**: Monitor startup time and memory usage
+- **User Experience**: Ensure smooth workflow integration
+
+## Extension Guidelines
+
+### Adding New Features
+1. **Create Module**: Follow the nvf module structure
+2. **Add Options**: Define configuration options in `options.nix`
+3. **Implement**: Add implementation in `config.nix`
+4. **Integrate**: Add to appropriate `default.nix` aggregator
+5. **Document**: Update README and add usage examples
+6. **Test**: Verify functionality and performance
+
+### Plugin Integration
+1. **Research**: Understand plugin capabilities and configuration
+2. **Isolate**: Create dedicated module for the plugin
+3. **Configure**: Use explicit configuration options
+4. **Map**: Add appropriate key mappings
+5. **Document**: Document usage and configuration options
+
+### Custom Lua Code
+```nix
+# Use entryAnywhere for custom Lua
+pluginRC.custom-feature = entryAnywhere ''
+  -- Custom Lua code here
+  -- Always comment complex logic
+  -- Use proper error handling
+'';
+```
+
+## Security and Best Practices
+
+### 1. Package Management
+- **Version Pinning**: Pin specific versions when needed
+- **Dependency Management**: Manage dependencies explicitly
+- **Security Updates**: Regularly update packages
+- **Vulnerability Scanning**: Monitor for security issues
+
+### 2. Configuration Security
+- **No Hardcoded Secrets**: Use environment variables
+- **Input Validation**: Validate user inputs
+- **Path Security**: Avoid unsafe path operations
+- **Permission Management**: Follow principle of least privilege
+
+## Maintenance and Updates
+
+### 1. Regular Maintenance
+- **Dependency Updates**: Keep nvf and nixpkgs current
+- **Plugin Updates**: Update plugins regularly
+- **Configuration Review**: Periodically review configurations
+- **Performance Monitoring**: Monitor performance metrics
+
+### 2. Breaking Changes
+- **Version Compatibility**: Test after major updates
+- **Migration Paths**: Provide clear migration instructions
+- **Backward Compatibility**: Maintain compatibility when possible
+- **Documentation Updates**: Update documentation for changes
+
+## Documentation Standards
+
+### 1. Code Documentation
+- **Inline Comments**: Comment complex configurations
+- **Module Documentation**: Document module purpose and usage
+- **API Documentation**: Document configuration options
+- **Examples**: Provide usage examples
+
+### 2. User Documentation
+- **Installation Guide**: Clear installation instructions
+- **Configuration Guide**: How to customize the configuration
+- **Usage Guide**: How to use features effectively
+- **Troubleshooting**: Common issues and solutions
+
+## Quality Assurance
+
+### 1. Code Quality
+- **Consistent Style**: Follow established patterns
+- **Error Handling**: Implement proper error handling
+- **Performance**: Optimize for performance
+- **Maintainability**: Write maintainable code
+
+### 2. User Experience
+- **Intuitive**: Make features intuitive to use
+- **Efficient**: Optimize for developer efficiency
+- **Reliable**: Ensure reliable functionality
+- **Responsive**: Maintain responsive performance
+
+This configuration represents 30+ years of development experience and follows industry best practices for maximum productivity. Every decision is made with developer efficiency and professional standards in mind.
