@@ -41,34 +41,17 @@
 in {
   # Assistant configuration
   assistant = {
-    # TODO: Not mature enough, but in the future look into replacing with
-    # copilot-language-server
-    #
-    copilot = {
+    sidekick = {
       enable = true;
-      cmp.enable = true;
-      setupOpts = {
-        suggestion = {enabled = false;};
-        copilot_model = "gpt-4o-copilot";
-        panel = {enabled = false;};
-        filetypes = {
-          gitcommit = true;
-          markdown = true;
-          yaml = true;
-          plantuml = true;
-        };
-      };
-    };
-    copilot-chat = {
-      enable = true;
+      cliProviders = ["cursor"];
       keymaps = {
         ask = "<leader>cc<CR>";
-        gitCommit = "<leader>ccg";
-        fixDiagnostic = "<leader>ccd";
+        diagnostics = "<leader>ccdf";
+        diagnosticsAll = "<leader>ccda";
         predefinedPrompts = sharedPrompts;
       };
       setupOpts = {
-        model = "claude-3.7-sonnet-thought";
+        nes.enabled = false;
       };
     };
   };
