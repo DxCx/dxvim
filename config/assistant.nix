@@ -59,7 +59,7 @@ in {
     (mkKeymap "v" "<leader>ccr" "<cmd>CopilotChatReview<CR>" {desc = "[CopilotChat] Review code";})
     (mkKeymap "v" "<leader>ccf" "<cmd>CopilotChatFix<CR>" {desc = "[CopilotChat] Fix code";})
     (mkKeymap "v" "<leader>cco" "<cmd>CopilotChatOptimize<CR>" {desc = "[CopilotChat] Optimize code";})
-    (mkKeymap "v" "<leader>ccd" "<cmd>CopilotChatDocs<CR>" {desc = "[CopilotChat] Document code";})
+    (mkKeymap "v" "<leader>ccD" "<cmd>CopilotChatDocs<CR>" {desc = "[CopilotChat] Document code";})
     (mkKeymap "v" "<leader>cct" "<cmd>CopilotChatTests<CR>" {desc = "[CopilotChat] Generate tests";})
   ];
 }
