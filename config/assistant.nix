@@ -1,6 +1,43 @@
 {lib, ...}: let
-  inherit (lib.nvim.binds) mkKeymap;
-  inherit (lib.nvim.dag) entryAfter;
+  # Define shared prompts for AI assistants
+  sharedPrompts = [
+    {
+      title = "Explain code";
+      prompt = "Please explain how this code works, including its purpose, logic, and any important details.";
+      keymap = "<leader>cce";
+      mode = "v";
+    }
+    {
+      title = "Review code";
+      prompt = "Please review this code for potential issues, bugs, performance problems, and suggest improvements.";
+      keymap = "<leader>ccr";
+      mode = "v";
+    }
+    {
+      title = "Fix code";
+      prompt = "Please analyze and fix any issues in this code. Explain what was wrong and how you fixed it.";
+      keymap = "<leader>ccf";
+      mode = "v";
+    }
+    {
+      title = "Optimize code";
+      prompt = "Please optimize this code for better performance, readability, and maintainability while preserving its functionality.";
+      keymap = "<leader>cco";
+      mode = "v";
+    }
+    {
+      title = "Document code";
+      prompt = "Please add comprehensive documentation to this code, including docstrings, comments, and explanations of complex logic.";
+      keymap = "<leader>ccD";
+      mode = "v";
+    }
+    {
+      title = "Generate tests";
+      prompt = "Please generate comprehensive unit tests for this code, covering edge cases and different scenarios.";
+      keymap = "<leader>cct";
+      mode = "v";
+    }
+  ];
 in {
   # Assistant configuration
   assistant = {
@@ -24,42 +61,15 @@ in {
     };
     copilot-chat = {
       enable = true;
+      keymaps = {
+        ask = "<leader>cc<CR>";
+        gitCommit = "<leader>ccg";
+        fixDiagnostic = "<leader>ccd";
+        predefinedPrompts = sharedPrompts;
+      };
       setupOpts = {
         model = "claude-3.7-sonnet-thought";
       };
     };
   };
-
-  luaConfigRC.copilot-chat = entryAfter ["pluginConfigs" "lazyConfigs"] ''
-    -- Generate wrapper for user input
-    local chat_ask_user = function(options)
-      -- Select selection method based on using range or not.
-      local selection = require("CopilotChat.select").buffer
-      if options.range then
-        selection = require("CopilotChat.select").visual
-      end
-
-      -- Obtain input from the user and ask in chat
-      vim.ui.input({ prompt = "Copilot Chat : " }, function(user_input)
-        require("CopilotChat").ask(user_input, {
-          selection = selection,
-        })
-      end)
-    end
-    vim.api.nvim_create_user_command('CopilotChatUserFreeText', chat_ask_user, { range = true })
-  '';
-
-  keymaps = [
-    (mkKeymap "n" "<leader>ccg" "<cmd>CopilotChatCommit<CR>" {desc = "[CopilotChat] Git Commit";})
-    (mkKeymap "n" "<leader>ccd" "<cmd>CopilotChatFixDiagnostic<CR>" {desc = "[CopilotChat] Fix Diagnostic";})
-    (mkKeymap "n" "<leader>cc<CR>" "<cmd>CopilotChatUserFreeText<CR>" {desc = "[CopilotChat] Ask";})
-
-    (mkKeymap "v" "<leader>cc<CR>" "<cmd>CopilotChatUserFreeText<CR>" {desc = "[CopilotChat] Ask with context";})
-    (mkKeymap "v" "<leader>cce" "<cmd>CopilotChatExplain<CR>" {desc = "[CopilotChat] Explain code";})
-    (mkKeymap "v" "<leader>ccr" "<cmd>CopilotChatReview<CR>" {desc = "[CopilotChat] Review code";})
-    (mkKeymap "v" "<leader>ccf" "<cmd>CopilotChatFix<CR>" {desc = "[CopilotChat] Fix code";})
-    (mkKeymap "v" "<leader>cco" "<cmd>CopilotChatOptimize<CR>" {desc = "[CopilotChat] Optimize code";})
-    (mkKeymap "v" "<leader>ccD" "<cmd>CopilotChatDocs<CR>" {desc = "[CopilotChat] Document code";})
-    (mkKeymap "v" "<leader>cct" "<cmd>CopilotChatTests<CR>" {desc = "[CopilotChat] Generate tests";})
-  ];
 }

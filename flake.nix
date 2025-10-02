@@ -20,7 +20,16 @@
   }:
     flake-utils.lib.eachDefaultSystem (
       system: let
-        pkgs = nixpkgs.legacyPackages.${system};
+        pkgs = import nixpkgs {
+          inherit system;
+          config.allowUnfreePredicate = pkg:
+            builtins.elem (nixpkgs.lib.getName pkg) [
+              "cursor-cli"
+              "gh-copilot"
+              "copilot-language-server" # Required by sidekick.nvim for NES
+              # Add other approved unfree packages here
+            ];
+        };
 
         # Create custom nvim package
         customNeovim = nvf.lib.neovimConfiguration {
