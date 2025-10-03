@@ -10,12 +10,24 @@
         nixpkgs.follows = "nixpkgs";
       };
     };
+
+    # Plugin sources
+    sidekick-nvim = {
+      url = "github:folke/sidekick.nvim";
+      flake = false;
+    };
+    hop-nvim-patched = {
+      url = "github:aznhe21/hop.nvim";
+      flake = false;
+    };
   };
 
   outputs = {
     nixpkgs,
     flake-utils,
     nvf,
+    sidekick-nvim,
+    hop-nvim-patched,
     ...
   }:
     flake-utils.lib.eachDefaultSystem (
@@ -38,6 +50,9 @@
             ./config
           ];
           inherit pkgs;
+          extraSpecialArgs = {
+            inherit sidekick-nvim hop-nvim-patched;
+          };
         };
       in {
         packages.default = customNeovim.neovim;

@@ -2,6 +2,7 @@
   pkgs,
   config,
   lib,
+  sidekick-nvim,
   ...
 }: let
   inherit (lib.modules) mkIf mkMerge;
@@ -17,16 +18,11 @@
   # Default to enabled (true) if not explicitly set
   nesDisabled = !(cfg.setupOpts.nes.enabled or true);
 
-  # Build sidekick-nvim from GitHub since it's not in nixpkgs
+  # Build sidekick-nvim from flake input
   sidekickPackageBase = pkgs.vimUtils.buildVimPlugin {
     pname = "sidekick-nvim";
     version = "2025-01-08";
-    src = pkgs.fetchFromGitHub {
-      owner = "folke";
-      repo = "sidekick.nvim";
-      rev = "52a6ed40d312726a45ffc191fdc81791c4d928f5";
-      sha256 = "sha256-+uChBKOYqxhrk3NghcX/PsHXYRgI1lJaLbEFOW9mgVg=";
-    };
+    src = sidekick-nvim;
     dependencies = [pkgs.vimPlugins.lazy-nvim];
   };
 
