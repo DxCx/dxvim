@@ -23,7 +23,7 @@
     pname = "sidekick-nvim";
     version = "2025-01-08";
     src = sidekick-nvim;
-    dependencies = [pkgs.vimPlugins.lazy-nvim];
+    dependencies = [pkgs.vimPlugins.lazy-nvim pkgs.vimPlugins.snacks-nvim];
   };
 
   # Override to remove copilot-language-server dependency if NES is disabled

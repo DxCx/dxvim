@@ -51,7 +51,7 @@
       clang = {
         enable = true;
         # Downgrade for compatability with NS
-        lsp.package = pkgs.clang-tools_19;
+        lsp.package = pkgs.llvmPackages_19.clang-tools;
       };
     };
   };
