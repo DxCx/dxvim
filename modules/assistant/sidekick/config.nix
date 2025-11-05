@@ -121,8 +121,11 @@ in {
           local sidekick_ask_user = function(options)
             -- Obtain input from the user and ask in chat
             vim.ui.input({ prompt = "Sidekick : " }, function(user_input)
+              if not user_input or user_input == "" then return end
+              -- Include location context: {position} for file buffers, {this} adds selection for non-files
+              local msg = "{position} " .. user_input
               require("sidekick.cli").send({
-                msg = user_input,
+                msg = msg,
                 selection = options.range and options.range > 0,
                 submit = true,
               })
@@ -131,6 +134,7 @@ in {
           vim.api.nvim_create_user_command('SidekickUserFreeText', sidekick_ask_user, { range = true })
 
           -- Commands for built-in diagnostic prompts
+          -- Note: Built-in prompts already include location via {file} placeholder
           vim.api.nvim_create_user_command('SidekickDiagnostics', function()
             require("sidekick.cli").send({
               prompt = "diagnostics",
@@ -157,22 +161,26 @@ in {
             vim.ui.input({ prompt = "Sidekick : " }, function(user_input)
               if not user_input or user_input == "" then return end
 
-              -- Restore visual selection temporarily
+              -- Restore visual selection marks first
               vim.api.nvim_buf_set_mark(buf, '<', from[1], from[2], {})
               vim.api.nvim_buf_set_mark(buf, '>', to[1], to[2], {})
-              vim.cmd('normal! gv')  -- Restore visual selection
 
-              -- Now send while in visual mode
-              require("sidekick.cli").send({
-                msg = user_input,
-                selection = true,
-                location = true,  -- Include file location like prompts do
-                submit = true,
-              })
+              -- Use schedule to ensure visual selection is restored before send()
+              vim.schedule(function()
+                vim.cmd('normal! gv')  -- Restore visual selection
+                -- Include location context: {position} for file buffers
+                local msg = "{position} " .. user_input
+                require("sidekick.cli").send({
+                  msg = msg,
+                  selection = true,
+                  submit = true,
+                })
+              end)
             end)
           end, { desc = "[Sidekick] Ask with context" })
 
           -- Generate commands for predefined prompts
+          -- Note: Prompts should include {position} or {this} in their template for location
           ${lib.concatMapStringsSep "\n" (prompt: ''
               vim.api.nvim_create_user_command('SidekickPrompt${sanitizeTitle prompt.title}', function(opts)
                 require("sidekick.cli").send({
@@ -190,6 +198,8 @@ in {
                 if prompt.mode == "v"
                 then ''
                   vim.keymap.set('v', '${prompt.keymap}', function()
+                    -- We're already in visual mode, so send immediately
+                    -- Note: Prompts should include {position} or {this} in their template for location
                     require("sidekick.cli").send({
                       prompt = "${lib.toLower (sanitizeTitle prompt.title)}",
                       selection = true,
