@@ -4,6 +4,7 @@
   ...
 }: let
   inherit (lib.nvim.binds) mkKeymap;
+  inherit (lib.modules) mkForce;
 
   refactoringNvim = {
     lazy.plugins = {
@@ -43,15 +44,27 @@
   };
 
   # C/C++ configuration
-  clangConfig = {
+  clangConfig = let
+    # Select clang-tools version here - update this line to change versions
+    clangTools = pkgs.llvmPackages_19.clang-tools;
+  in {
     keymaps = [
       (mkKeymap "n" "gh" "<cmd>ClangdSwitchSourceHeader<CR>" {desc = "Switch Source/Header [clangd]";})
     ];
     languages = {
       clang = {
         enable = true;
-        # Downgrade for compatability with NS
-        lsp.package = pkgs.llvmPackages_19.clang-tools;
+      };
+    };
+    # Add clang-tools package to make clangd available
+    extraPackages = [clangTools];
+    # Configure custom clangd version via new LSP servers API
+    # Use mkForce to override the default clangd from nvf's clang module
+    lsp = {
+      servers = {
+        clangd = {
+          cmd = mkForce ["${clangTools}/bin/clangd"];
+        };
       };
     };
   };
