@@ -171,6 +171,7 @@ in
       # Treesitter context configuration
       mini.ai.enable = true;
       treesitter = {
+        enable = true;
         indent.enable = true;
         highlight.enable = true;
         context.enable = true;
