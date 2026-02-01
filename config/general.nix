@@ -5,7 +5,7 @@ in {
   bell = "visual";
   options = {
     termguicolors = true;
-    updatetime = 10; # Update UI every 10ms
+    updatetime = 100; # Update UI every 100ms
     timeoutlen = 250;
     expandtab = true;
     encoding = "utf-8";
@@ -18,7 +18,7 @@ in {
     linebreak = true;
     list = false;
     ignorecase = true;
-    smartcase = false;
+    smartcase = true;
     backspace = "indent,eol,start";
     hlsearch = true;
     wrapscan = true;

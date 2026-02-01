@@ -15,8 +15,8 @@
   keymapsCfg = cfg.keymaps;
 
   # Check if NES (Next Edit Suggestions) is disabled
-  # Default to enabled (true) if not explicitly set
-  nesDisabled = !(cfg.setupOpts.nes.enabled or true);
+  # Default to disabled (false) if not explicitly set
+  nesDisabled = !(cfg.setupOpts.nes.enabled or false);
 
   # Build sidekick-nvim from flake input
   sidekickPackageBase = pkgs.vimUtils.buildVimPlugin {
