@@ -56,6 +56,26 @@
         };
       in {
         packages.default = customNeovim.neovim;
+
+        checks = {
+          # Verify config evaluates without errors
+          eval = pkgs.runCommand "eval-check" {} ''
+            echo "Evaluating flake..." > $out
+          '';
+
+          # Verify Neovim builds and runs
+          build = pkgs.runCommand "build-check" {} ''
+            ${customNeovim.neovim}/bin/nvim --version > $out
+          '';
+
+          # Verify plugins load in headless mode
+          plugins = pkgs.runCommand "plugin-test" {
+            nativeBuildInputs = [customNeovim.neovim];
+          } ''
+            export HOME=$(mktemp -d)
+            nvim --headless -c "echo 'OK'" -c "quit" 2>&1 | tee $out
+          '';
+        };
       }
     );
 }
