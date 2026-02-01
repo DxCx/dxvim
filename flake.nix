@@ -75,6 +75,13 @@
             export HOME=$(mktemp -d)
             nvim --headless -c "echo 'OK'" -c "quit" 2>&1 | tee $out
           '';
+
+          # Lint Nix code with statix
+          lint = pkgs.runCommand "statix-check" {
+            nativeBuildInputs = [pkgs.statix];
+          } ''
+            statix check ${./.} > $out 2>&1 || (cat $out && exit 1)
+          '';
         };
       }
     );
