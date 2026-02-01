@@ -8,65 +8,36 @@
   inherit (lib.generators) mkLuaInline;
   inherit (lib.nvim.dag) entryAnywhere;
 
-  # Telescope configuration (Between buffers)
-  # TODO: Replace telescope?
-  telescopeCustomCmd = "TelescopeFindFiles";
-  telescopeCustomFindFilesBackend = ''
-    local api = require("telescope.builtin")
-    local is_in_git = function()
-        local paths = vim.fs.find('.git', {
-            limit = 1,
-            upward = true,
-            type = 'directory',
-        })
-
-        return #paths > 0
+  # Snacks picker configuration (replaces Telescope)
+  snacksPickerBackend = ''
+    local snacks_find_files = function()
+      local paths = vim.fs.find('.git', {
+        limit = 1,
+        upward = true,
+        type = 'directory',
+      })
+      if #paths > 0 then
+        Snacks.picker.git_files()
+      else
+        Snacks.picker.files()
+      end
     end
-
-    local telescope_find_files_ext = function()
-        if (is_in_git()) then
-            api.git_files()
-        else
-            api.find_files()
-        end
-    end
-
-    vim.api.nvim_create_user_command('${telescopeCustomCmd}', telescope_find_files_ext, { range = false })
+    vim.api.nvim_create_user_command('SnacksPickerFiles', snacks_find_files, { range = false })
   '';
 
-  telescopeConfig = {
-    pluginRC.telescope-custom-find-files = entryAnywhere telescopeCustomFindFilesBackend;
+  snacksPickerConfig = {
+    pluginRC.snacks-picker-backend = entryAnywhere snacksPickerBackend;
     keymaps = [
-      (mkKeymap "n" "<C-p><C-p>" "<cmd>${telescopeCustomCmd}<CR>" {desc = "Find (Git) file [Telescope]";})
+      (mkKeymap "n" "<C-p>" "<cmd>SnacksPickerFiles<CR>" {desc = "Find (Git) files [Snacks]";})
+      (mkKeymap "n" "<C-p>s" "<cmd>lua Snacks.picker.grep()<CR>" {desc = "Live grep [Snacks]";})
+      (mkKeymap "n" "<C-p>b" "<cmd>lua Snacks.picker.buffers()<CR>" {desc = "Buffers [Snacks]";})
+      (mkKeymap "n" "<C-p>r" "<cmd>lua Snacks.picker.recent()<CR>" {desc = "Recent files [Snacks]";})
+      (mkKeymap "n" "<C-p>o" "<cmd>lua Snacks.picker.lsp_workspace_symbols()<CR>" {desc = "Workspace symbols [Snacks]";})
+      (mkKeymap "n" "<C-p>d" "<cmd>lua Snacks.picker.diagnostics()<CR>" {desc = "Diagnostics [Snacks]";})
+      (mkKeymap "n" "<C-p>h" "<cmd>lua Snacks.picker.help()<CR>" {desc = "Help [Snacks]";})
+      (mkKeymap "n" "<C-p>g" "<cmd>lua Snacks.picker.git_status()<CR>" {desc = "Git status [Snacks]";})
     ];
-    telescope = {
-      enable = true;
-      mappings = {
-        findProjects = null;
-        gitStatus = "<C-p>g";
-        liveGrep = "<C-p>s";
-        buffers = "<C-p>b";
-        helpTags = "<C-p>h";
-        findFiles = null;
-        open = null;
-        resume = null;
-
-        gitCommits = null;
-        gitBufferCommits = null;
-        gitBranches = null;
-        gitStash = null;
-
-        lspDocumentSymbols = null;
-        lspWorkspaceSymbols = "<C-p>o";
-        lspReferences = null;
-        lspImplementations = null;
-        lspDefinitions = null;
-        lspTypeDefinitions = "<C-p>t";
-        diagnostics = "<C-p>d";
-
-        treesitter = null;
-      };
-    };
+    telescope.enable = false; # Replaced by Snacks picker
   };
 
   # hop config, Inside buffer
@@ -109,5 +80,5 @@
 in
   lib.mkMerge [
     hopConfig
-    telescopeConfig
+    snacksPickerConfig
   ]

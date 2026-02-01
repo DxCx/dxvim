@@ -102,6 +102,14 @@ _: {
             "SnacksIndent8"
           ];
         };
+        picker = {
+          enabled = true;
+          sources = {
+            files = {
+              hidden = true; # Show hidden files
+            };
+          };
+        };
       };
     };
   };
