@@ -164,8 +164,6 @@ in
         };
 
         # TODO: GraphQL
-
-        # TODO: Javascript?
       };
 
       # Treesitter context configuration
