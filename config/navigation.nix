@@ -52,6 +52,8 @@
   hopKeyBindings = [
     (mkKeymap "n" "<leader>p" "<cmd>HopPattern<CR>" {desc = "Hop To Pattern";})
     (mkKeymap "n" "<leader>a" "<cmd>HopAnywhere<CR>" {desc = "Hop Anywhere";})
+    # Intentionally override default w/b word motions with hop equivalents.
+    # This provides faster navigation by allowing direct jumps to any visible word.
     (mkKeymap "n" "b" "<cmd>HopWordBC<CR>" {desc = "Hop To Previous Word";})
     (mkKeymap "n" "w" "<cmd>HopWordAC<CR>" {desc = "Hop To Next Word";})
   ];
