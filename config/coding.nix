@@ -27,6 +27,11 @@
   };
 
   lspMappings = {
+    keymaps = [
+      (mkKeymap "n" "<leader>ti"
+        "<cmd>lua vim.lsp.inlay_hint.enable(not vim.lsp.inlay_hint.is_enabled())<CR>"
+        {desc = "Toggle Inlay Hints [LSP]";})
+    ];
     lsp = {
       mappings = {
         goToDefinition = "gd";
@@ -38,7 +43,6 @@
         codeAction = "<leader>ca";
         format = "=";
         toggleFormatOnSave = "<leader>tf";
-        # TODO: Toggle Inlay hints?
       };
     };
   };
