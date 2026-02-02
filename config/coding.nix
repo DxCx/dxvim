@@ -140,11 +140,11 @@ in
           enable = true;
         };
 
-        # TODO: Docker
+        # Docker configuration
+        docker.enable = true;
 
-        # TODO: Diagram / PlantUML
-
-        # TODO: CMake
+        # CMake configuration
+        cmake.enable = true;
 
         # Web configuration
         ts = {
@@ -163,7 +163,8 @@ in
           enable = true;
         };
 
-        # TODO: GraphQL
+        # GraphQL configuration
+        graphql.enable = true;
       };
 
       # Treesitter context configuration
