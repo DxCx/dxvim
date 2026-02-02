@@ -1,6 +1,11 @@
 {
   description = "DxCx nvim config written using nvf";
 
+  nixConfig = {
+    extra-substituters = ["https://dxvim.cachix.org"];
+    extra-trusted-public-keys = ["dxvim.cachix.org-1:bEdE17MPsQMGnnbsH8v3Xw/A3VneDtmwtDI8qb5h+/k="];
+  };
+
   inputs = {
     nixpkgs.url = "github:nixos/nixpkgs/nixpkgs-unstable";
     flake-utils.url = "github:numtide/flake-utils";
