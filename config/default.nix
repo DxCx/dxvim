@@ -3,10 +3,9 @@
   lib,
   pkgs,
   hop-nvim-patched,
-  sidekick-nvim,
   ...
 }: let
-  args = {inherit config lib pkgs hop-nvim-patched sidekick-nvim;};
+  args = {inherit config lib pkgs hop-nvim-patched;};
 in {
   config.vim = lib.mkMerge [
     (import ./assistant.nix args)
