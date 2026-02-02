@@ -1,3 +1,6 @@
+# NOTE: This module is currently unused but kept available for future use.
+# To enable, set `vim.assistant.copilot-chat.enable = true` in your config.
+# Provides an alternative to sidekick for GitHub Copilot Chat integration.
 {lib, ...}: let
   inherit (lib.options) mkEnableOption mkOption;
   inherit (lib.nvim.types) mkPluginSetupOption;
