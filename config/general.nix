@@ -12,7 +12,8 @@ in {
     autoindent = true;
     smartindent = false; # Treesitter taking over.
     cursorline = true;
-    tabstop = 4;
+    # Base defaults (editorconfig handles per-filetype overrides)
+    tabstop = 2;
     shiftwidth = 2;
     wrap = false;
     linebreak = true;
