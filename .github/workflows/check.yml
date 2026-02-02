@@ -29,6 +29,9 @@ jobs:
       - name: Build
         run: nix build --show-trace
 
+      - name: Format
+        run: nix run nixpkgs#alejandra -- --check .
+
       - name: Setup reviewdog
         uses: reviewdog/action-setup@v1
         with:

@@ -57,6 +57,8 @@
       in {
         packages.default = customNeovim.neovim;
 
+        formatter = pkgs.alejandra;
+
         checks = {
           # Verify config evaluates without errors
           eval = pkgs.runCommand "eval-check" {} ''
@@ -69,19 +71,29 @@
           '';
 
           # Verify plugins load in headless mode
-          plugins = pkgs.runCommand "plugin-test" {
-            nativeBuildInputs = [customNeovim.neovim];
-          } ''
-            export HOME=$(mktemp -d)
-            nvim --headless -c "echo 'OK'" -c "quit" 2>&1 | tee $out
-          '';
+          plugins =
+            pkgs.runCommand "plugin-test" {
+              nativeBuildInputs = [customNeovim.neovim];
+            } ''
+              export HOME=$(mktemp -d)
+              nvim --headless -c "echo 'OK'" -c "quit" 2>&1 | tee $out
+            '';
 
           # Lint Nix code with statix
-          lint = pkgs.runCommand "statix-check" {
-            nativeBuildInputs = [pkgs.statix];
-          } ''
-            statix check ${./.} > $out 2>&1 || (cat $out && exit 1)
-          '';
+          lint =
+            pkgs.runCommand "statix-check" {
+              nativeBuildInputs = [pkgs.statix];
+            } ''
+              statix check ${./.} > $out 2>&1 || (cat $out && exit 1)
+            '';
+
+          # Check Nix code formatting with alejandra
+          format =
+            pkgs.runCommand "format-check" {
+              nativeBuildInputs = [pkgs.alejandra];
+            } ''
+              alejandra --check ${./.} > $out 2>&1 || (cat $out && exit 1)
+            '';
         };
       }
     );
