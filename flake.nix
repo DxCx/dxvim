@@ -21,6 +21,8 @@
       url = "github:folke/sidekick.nvim";
       flake = false;
     };
+    # Patched hop.nvim fork that fixes Neovim 0.10+ compatibility issues
+    # See: https://github.com/phaazon/hop.nvim/issues/345
     hop-nvim-patched = {
       url = "github:aznhe21/hop.nvim";
       flake = false;
