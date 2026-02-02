@@ -26,7 +26,35 @@ jobs:
       - name: Update flake.lock
         run: nix flake update
 
+      - name: Check for changes
+        id: changes
+        run: |
+          if git diff --quiet flake.lock; then
+            echo "changed=false" >> "$GITHUB_OUTPUT"
+          else
+            echo "changed=true" >> "$GITHUB_OUTPUT"
+          fi
+
+      # Run checks before creating PR
+      - name: Build
+        if: steps.changes.outputs.changed == 'true'
+        run: nix build
+
+      - name: Format check
+        if: steps.changes.outputs.changed == 'true'
+        run: nix fmt -- --check .
+
+      - name: Lint check
+        if: steps.changes.outputs.changed == 'true'
+        run: nix run nixpkgs#statix -- check .
+
+      - name: Flake check
+        if: steps.changes.outputs.changed == 'true'
+        run: nix flake check
+
+      # Only create PR if all checks pass
       - name: Create Pull Request
+        if: steps.changes.outputs.changed == 'true'
         uses: peter-evans/create-pull-request@v6
         id: cpr
         with:
@@ -38,8 +66,8 @@ jobs:
           branch: auto-update/flake
           delete-branch: true
 
-      - name: Enable Auto-Merge
-        if: steps.cpr.outputs.pull-request-number
-        run: gh pr merge --auto --squash "${{ steps.cpr.outputs.pull-request-number }}"
+      - name: Merge Pull Request
+        if: steps.changes.outputs.changed == 'true' && steps.cpr.outputs.pull-request-number
+        run: gh pr merge --squash "${{ steps.cpr.outputs.pull-request-number }}"
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
