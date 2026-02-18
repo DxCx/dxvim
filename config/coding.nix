@@ -183,6 +183,7 @@ in
         indent.enable = true;
         highlight.enable = true;
         context.enable = true;
+        textobjects.enable = true;
       };
 
       # Comments configuration
