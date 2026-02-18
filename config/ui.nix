@@ -69,6 +69,10 @@ _: {
       enable = true;
     };
     fastaction.enable = true;
+    noice = {
+      enable = true;
+      setupOpts.cmdline.view = "cmdline";
+    };
   };
 
   # Utility configuration
