@@ -104,6 +104,13 @@ in {
     };
   };
 
+  # Terminal configuration
+  terminal.toggleterm = {
+    enable = true;
+    lazygit.enable = true;
+    mappings.open = "<leader>tt";
+  };
+
   # Utility configuration
   utility = {
     ccc.enable = true;
