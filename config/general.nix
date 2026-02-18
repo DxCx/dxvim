@@ -117,6 +117,7 @@ in {
     icon-picker.enable = true;
     diffview-nvim.enable = true;
     mkdir.enable = true;
+    sleuth.enable = true;
     images = {
       image-nvim.enable = false;
     };
