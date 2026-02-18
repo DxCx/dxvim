@@ -169,6 +169,11 @@ in
 
         # GraphQL configuration
         graphql.enable = true;
+
+        # Data format languages
+        json.enable = true;
+        yaml.enable = true;
+        toml.enable = true;
       };
 
       # Treesitter context configuration
