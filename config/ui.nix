@@ -1,4 +1,11 @@
-_: {
+{lib, ...}: let
+  inherit (lib.nvim.binds) mkKeymap;
+in {
+  keymaps = [
+    (mkKeymap "n" "<F2>" "<cmd>Neotree toggle<CR>" {desc = "Toggle file tree [neo-tree]";})
+  ];
+
+  filetree.neo-tree.enable = true;
   ### TODO: Align to get selected line diff color
 
   # Statusline configuration
