@@ -109,6 +109,7 @@ in {
     ccc.enable = true;
     icon-picker.enable = true;
     diffview-nvim.enable = true;
+    mkdir.enable = true;
     images = {
       image-nvim.enable = false;
     };
