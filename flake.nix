@@ -27,6 +27,14 @@
       url = "github:aznhe21/hop.nvim";
       flake = false;
     };
+
+    dxnixinfra = {
+      url = "path:./dxnixinfra";
+      inputs = {
+        nixpkgs.follows = "nixpkgs";
+        flake-utils.follows = "flake-utils";
+      };
+    };
   };
 
   outputs = {
@@ -35,6 +43,7 @@
     nvf,
     sidekick-nvim,
     hop-nvim-patched,
+    dxnixinfra,
     ...
   }:
     flake-utils.lib.eachDefaultSystem (
@@ -61,47 +70,30 @@
             inherit sidekick-nvim hop-nvim-patched;
           };
         };
-      in {
-        packages.default = customNeovim.neovim;
-
-        formatter = pkgs.alejandra;
-
-        checks = {
-          # Verify config evaluates without errors
-          eval = pkgs.runCommand "eval-check" {} ''
-            echo "Evaluating flake..." > $out
-          '';
-
-          # Verify Neovim builds and runs
-          build = pkgs.runCommand "build-check" {} ''
-            ${customNeovim.neovim}/bin/nvim --version > $out
-          '';
-
-          # Verify plugins load in headless mode
-          plugins =
-            pkgs.runCommand "plugin-test" {
-              nativeBuildInputs = [customNeovim.neovim];
-            } ''
-              export HOME=$(mktemp -d)
-              nvim --headless -c "echo 'OK'" -c "quit" 2>&1 | tee $out
+      in
+        {
+          packages.default = customNeovim.neovim;
+        }
+        // dxnixinfra.lib.mkFlakeOutputs {
+          src = ./.;
+          inherit pkgs;
+          extraChecks = {
+            eval = pkgs.runCommand "eval-check" {} ''
+              echo "Evaluating flake..." > $out
             '';
 
-          # Lint Nix code with statix
-          lint =
-            pkgs.runCommand "statix-check" {
-              nativeBuildInputs = [pkgs.statix];
-            } ''
-              statix check ${./.} > $out 2>&1 || (cat $out && exit 1)
+            build = pkgs.runCommand "build-check" {} ''
+              ${customNeovim.neovim}/bin/nvim --version > $out
             '';
 
-          # Check Nix code formatting with alejandra
-          format =
-            pkgs.runCommand "format-check" {
-              nativeBuildInputs = [pkgs.alejandra];
-            } ''
-              alejandra --check ${./.} > $out 2>&1 || (cat $out && exit 1)
-            '';
-        };
-      }
+            plugins =
+              pkgs.runCommand "plugin-test" {
+                nativeBuildInputs = [customNeovim.neovim];
+              } ''
+                export HOME=$(mktemp -d)
+                nvim --headless -c "echo 'OK'" -c "quit" 2>&1 | tee $out
+              '';
+          };
+        }
     );
 }

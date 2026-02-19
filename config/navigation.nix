@@ -5,7 +5,7 @@
   ...
 }: let
   inherit (lib.nvim.binds) mkKeymap;
-  inherit (lib.generators) mkLuaInline;
+
   inherit (lib.nvim.dag) entryAnywhere;
 
   # Snacks picker configuration (replaces Telescope)
