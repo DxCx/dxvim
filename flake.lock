@@ -1,5 +1,24 @@
 {
   "nodes": {
+    "dxnixinfra": {
+      "inputs": {
+        "flake-utils": [
+          "flake-utils"
+        ],
+        "nixpkgs": [
+          "nixpkgs"
+        ]
+      },
+      "locked": {
+        "path": "./dxnixinfra",
+        "type": "path"
+      },
+      "original": {
+        "path": "./dxnixinfra",
+        "type": "path"
+      },
+      "parent": []
+    },
     "flake-compat": {
       "flake": false,
       "locked": {
@@ -151,6 +170,7 @@
     },
     "root": {
       "inputs": {
+        "dxnixinfra": "dxnixinfra",
         "flake-utils": "flake-utils",
         "hop-nvim-patched": "hop-nvim-patched",
         "nixpkgs": "nixpkgs",

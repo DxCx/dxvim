@@ -9,7 +9,6 @@
   inherit (lib.nvim.dag) entryAnywhere;
   inherit (lib.nvim.lua) toLuaObject;
   inherit (lib.nvim.binds) mkKeymap;
-  inherit (lib.generators) mkLuaInline;
 
   cfg = config.vim.assistant.sidekick;
   keymapsCfg = cfg.keymaps;
