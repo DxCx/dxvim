@@ -10,14 +10,18 @@
         ]
       },
       "locked": {
-        "path": "./dxnixinfra",
-        "type": "path"
+        "lastModified": 1771908058,
+        "narHash": "sha256-4vdXl+YGXZqMsLRyuhx/T9xdubsqGSQeMe2rL7ETlME=",
+        "owner": "DxCx",
+        "repo": "dxnixinfra",
+        "rev": "4e40a491f90d4eb0aeeb5933b0adbace2b9ef83e",
+        "type": "github"
       },
       "original": {
-        "path": "./dxnixinfra",
-        "type": "path"
-      },
-      "parent": []
+        "owner": "DxCx",
+        "repo": "dxnixinfra",
+        "type": "github"
+      }
     },
     "flake-compat": {
       "flake": false,

@@ -29,7 +29,7 @@
     };
 
     dxnixinfra = {
-      url = "path:./dxnixinfra";
+      url = "github:DxCx/dxnixinfra";
       inputs = {
         nixpkgs.follows = "nixpkgs";
         flake-utils.follows = "flake-utils";
