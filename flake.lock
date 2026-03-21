@@ -185,11 +185,11 @@
     "sidekick-nvim": {
       "flake": false,
       "locked": {
-        "lastModified": 1773661087,
-        "narHash": "sha256-lfbAtK+U5OBqTMz60Ic2FrqM4fBpl63QIxK4U+QLBsA=",
+        "lastModified": 1774047901,
+        "narHash": "sha256-ozNjEz4SHe7qP/O5BfX0NvfBgXpIfbvsemZrYntSwWY=",
         "owner": "folke",
         "repo": "sidekick.nvim",
-        "rev": "f95ba541970c41a631d480062afedb0ebc455e19",
+        "rev": "8ad0ede3ff9065878a853e4b037ba6ac88231fb0",
         "type": "github"
       },
       "original": {
