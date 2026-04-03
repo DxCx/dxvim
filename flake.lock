@@ -10,11 +10,11 @@
         ]
       },
       "locked": {
-        "lastModified": 1775095137,
-        "narHash": "sha256-ra7QMEboI27JeWWlk1vkgzKHLVnBW425t5BOs1tphd4=",
+        "lastModified": 1775180868,
+        "narHash": "sha256-uC0lrBbb5SMN/tSDwBst9kVvHCUGKZoT4CZewfW9iC4=",
         "owner": "DxCx",
         "repo": "dxnixinfra",
-        "rev": "7f1516c1ddf60f7b80f05b723f509721bd009d78",
+        "rev": "cba6ae9b12f0b771f47296b86d53271abc23fd1b",
         "type": "github"
       },
       "original": {
