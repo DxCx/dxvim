@@ -151,7 +151,7 @@ in
         cmake.enable = true;
 
         # Web configuration
-        ts = {
+        typescript = {
           enable = true;
         };
 
