@@ -26,6 +26,11 @@ jobs:
           extra_nix_config: |
             accept-flake-config = true
 
+      - name: Setup Cachix
+        uses: cachix/cachix-action@v17
+        with:
+          name: dxvim
+
       - name: Build
         run: nix build --show-trace
 
