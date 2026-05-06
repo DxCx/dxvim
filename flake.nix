@@ -7,8 +7,11 @@
   };
 
   inputs = {
-    nixpkgs.url = "github:nixos/nixpkgs/nixpkgs-unstable";
-    flake-utils.url = "github:numtide/flake-utils";
+    # dxnixinfra is the single source of truth for nixpkgs.
+    # To bump nixpkgs, bump dxnixinfra.
+    dxnixinfra.url = "github:DxCx/dxnixinfra";
+    nixpkgs.follows = "dxnixinfra/nixpkgs";
+    flake-utils.follows = "dxnixinfra/flake-utils";
     nvf = {
       url = "github:notashelf/nvf";
       inputs = {
@@ -26,14 +29,6 @@
     hop-nvim-patched = {
       url = "github:aznhe21/hop.nvim";
       flake = false;
-    };
-
-    dxnixinfra = {
-      url = "github:DxCx/dxnixinfra";
-      inputs = {
-        nixpkgs.follows = "nixpkgs";
-        flake-utils.follows = "flake-utils";
-      };
     };
   };
 

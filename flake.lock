@@ -2,12 +2,8 @@
   "nodes": {
     "dxnixinfra": {
       "inputs": {
-        "flake-utils": [
-          "flake-utils"
-        ],
-        "nixpkgs": [
-          "nixpkgs"
-        ]
+        "flake-utils": "flake-utils",
+        "nixpkgs": "nixpkgs"
       },
       "locked": {
         "lastModified": 1778031190,
@@ -175,9 +171,15 @@
     "root": {
       "inputs": {
         "dxnixinfra": "dxnixinfra",
-        "flake-utils": "flake-utils",
+        "flake-utils": [
+          "dxnixinfra",
+          "flake-utils"
+        ],
         "hop-nvim-patched": "hop-nvim-patched",
-        "nixpkgs": "nixpkgs",
+        "nixpkgs": [
+          "dxnixinfra",
+          "nixpkgs"
+        ],
         "nvf": "nvf",
         "sidekick-nvim": "sidekick-nvim"
       }
