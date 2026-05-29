@@ -144,9 +144,6 @@ in
           enable = true;
         };
 
-        # Docker configuration
-        docker.enable = true;
-
         # CMake configuration
         cmake.enable = true;
 
