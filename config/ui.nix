@@ -12,6 +12,10 @@ in {
   statusline = {
     lualine = {
       enable = true;
+      integrations.breadcrumbs = {
+        nvim-navic.enable = false;
+        navbuddy.enable = false;
+      };
       activeSection.b = [
         ''
           {
@@ -68,10 +72,6 @@ in {
     colorizer.enable = true;
     # places underscore under the variable name the cursor is at
     illuminate.enable = true;
-    breadcrumbs = {
-      enable = false;
-      navbuddy.enable = false;
-    };
     smartcolumn = {
       enable = true;
     };
