@@ -16,30 +16,30 @@ in {
         nvim-navic.enable = false;
         navbuddy.enable = false;
       };
-      activeSection.b = [
-        ''
-          {
-            "filetype",
-            colored = true,
-            icon_only = true,
-            icon = { align = 'left' }
-          }
-        ''
-        ''
-          {
-            "filename",
-            symbols = {modified = ' ', readonly = ' '},
-            separator = {right = ""},
-            path = 2
-          }
-        ''
-        ''
-          {
-            "",
-            draw_empty = true,
-            separator = { left = "", right = "" }
-          }
-        ''
+      setupOpts.sections.lualine_b = [
+        {
+          "@1" = "filetype";
+          colored = true;
+          icon_only = true;
+          icon = {align = "left";};
+        }
+        {
+          "@1" = "filename";
+          symbols = {
+            modified = " ";
+            readonly = " ";
+          };
+          separator = {right = "";};
+          path = 2;
+        }
+        {
+          "@1" = "";
+          draw_empty = true;
+          separator = {
+            left = "";
+            right = "";
+          };
+        }
       ];
     };
   };
